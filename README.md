@@ -6,4 +6,33 @@ This repository is divided into subfolders. There is one folder for each microco
 
 This project will involve several microcontrollers where one of them will be written in embedded C++ and the others in embedded C. Because of this the file extensions for the C files will be .h and .c, while the C++ files will be .hpp and .cpp.
 
+**The folder structure works in the following way:**
+
+- **AvionicsTeam2020** - Root folder
+  - **Finite State Machine** - Subfolder
+    - inc
+    - src
+    - test
+    - vscode
+    - main.cpp
+  - **Sensors** - Subfolder
+    - inc
+    - src
+    - test
+    - vscode
+    - main.c
+  - **Engine** - Subfolder
+    - inc
+    - src
+    - test
+    - vscode
+    - main.c
+  - **Power systems** - Subfolder
+    - inc
+    - src
+    - test
+    - vscode
+    - main.c
+
+
 ![Folders](Images/folder_structure) 
