@@ -1,4 +1,5 @@
 #include "arduino.h"
+#include "xbee_reciever.h"
 
 #define outDumpPin 13
 #define outFillPin 12
@@ -85,7 +86,7 @@ void ignition(char order){
         xbee_transmit("Caution: Rocket is about to arm. Confirm with Y/N");
         char confirmArm = ' ';
         while(true){
-          confirmArm = xbee_Serial.read();
+          confirmArm = xbee_recieve();
           if(confirmArm == 'Y'){
             digitalWrite(outArmPin, LOW);
             armingStatus = 1;
@@ -97,7 +98,7 @@ void ignition(char order){
             xbee_transmit("Arming cancelled");
             break;
           }
-          else if (xbee_Serial.available()){
+          else if (xbee_Serial_available() > 0){
             xbee_transmit("To Arm: Type 'Y', otherwise 'N'");
           }
         }
@@ -141,6 +142,5 @@ void statusCheck(char check){
         xbee_transmit(fillStatus);
         xbee_transmit("Arming status is: ");
         xbee_transmit(armingStatus);
-        xbee_transmit();
     }
 }
