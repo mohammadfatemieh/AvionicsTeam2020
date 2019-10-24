@@ -1,5 +1,5 @@
 #include "arduino.h"
-#include "xbee_reciever.h"
+#include "xbee_GS.h"
 
 #define outDumpPin 13
 #define outFillPin 12
@@ -135,13 +135,13 @@ void ignition(char order){
 void statusCheck(char check){
     if (check == 'S'){
         xbee_transmit("\nCurrent status is:\n");
-        xbee_transmit("Dumpstatus is: ");
-        xbee_transmit(dumpStatus);
-        xbee_transmit("Airing status is: ");
-        xbee_transmit(airingStatus);
-        xbee_transmit("Filling status is: ");
-        xbee_transmit(fillStatus);
-        xbee_transmit("Arming status is: ");
-        xbee_transmit(armingStatus);
+        xbee_transmit("Dumpstatus is: ", dumpStatus);
+        //xbee_transmit(dumpStatus);
+        xbee_transmit("Airing status is: ", airingStatus);
+        //xbee_transmit(airingStatus);
+        xbee_transmit("Filling status is: ", fillStatus);
+        //xbee_transmit(fillStatus);
+        xbee_transmit("Arming status is: ", armingStatus);
+        //xbee_transmit(armingStatus);
     }
 }

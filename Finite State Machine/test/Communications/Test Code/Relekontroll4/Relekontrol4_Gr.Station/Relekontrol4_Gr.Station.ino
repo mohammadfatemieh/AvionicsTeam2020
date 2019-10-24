@@ -1,5 +1,5 @@
 #include "utilities.h"
-#include "xbee_reciever.h"
+#include "xbee_GS.h"
 
 int counter = 1;
 
@@ -9,12 +9,13 @@ void setup(){
     xbee_Serial_init();
     while(!Serial);
     xbee_transmit("Ready to recieve data");
+    Serial.println("Ready to send data");
 }
 
 void loop() {
-//    if (counter >= 20000) {
-//        xbee_transmit("I_work!");
-//        Serial.println("I_work!");
+//    if (counter >= 1000) {
+//        xbee_transmit("I work!");
+//        Serial.println("I work!");
 //        counter = 1;
 //    }
 //    counter ++;

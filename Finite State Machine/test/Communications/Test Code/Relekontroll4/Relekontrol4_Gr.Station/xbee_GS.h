@@ -1,5 +1,5 @@
-#ifndef XBEE_RECIEVER_H
-#define XBEE_RECIEVER_H
+#ifndef XBEE_GS_H
+#define XBEE_GS_H
 
 void xbee_Serial_init();
 
@@ -19,4 +19,4 @@ void xbee_transmit(int value);
 // Send both string and value
 void xbee_transmit(String cool_word, int value);
 
-#endif /* XBEE_RECIEVER_H */
+#endif /* XBEE_GS_H */
