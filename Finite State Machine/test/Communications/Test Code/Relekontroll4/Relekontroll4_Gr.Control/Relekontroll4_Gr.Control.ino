@@ -1,27 +1,31 @@
 #include <SoftwareSerial.h>
-#define LENGTH 100 // With new line added automatically
+#define LENGTH 100
 
 SoftwareSerial xbee_Serial(2, 3); //RX, TX
 
 //Variables:
 char char_array[LENGTH+1] = { (char)0 };
-int index;
+bool started= false;    //True: Message is strated
+bool ended  = false;    //True: Message is finished
+char incomingByte;     //Variable to store the incoming byte
+String incomingString;
+char msg[LENGTH];       //Message - array from 0 to LENGTH
+byte index;             //Index of array
 char letter;
-
+String cool_word = "";
 
 void setup() {
     Serial.begin(9600); //Baud rate must be the same as is on xBee module
     xbee_Serial.begin(9600);
 }
 
-
-void xbee_transmit();
-void xbee_recieve();
+void xbee_recieve_and_print();
 void xbee_transmit(String word);
 
 void loop() {
     xbee_transmit();
-    xbee_recieve();
+    xbee_recieve_and_print();
+    delay(20);
 }
 
 void xbee_transmit() {
@@ -29,28 +33,26 @@ void xbee_transmit() {
         letter = Serial.read();
         char_array[index] = letter;
         index++;
-        if (letter == '\n') {
-            xbee_Serial.print('<');
-            for (int i = 0; i < index-1; i++) {
-                xbee_Serial.print(char_array[i]);
+        for (int i = 0; i < 1; i++) {
+            if (letter == '\n') {
+                xbee_Serial.print('<');
+                for (int i = 0; i < index-1; i++) {
+                    xbee_Serial.print(char_array[i]);
+                }
+                xbee_Serial.println('>');
+                index = 0;
+                for (int i = 0; i < sizeof(char_array);i++) {
+                    char_array[i] = (char)0;
+                }
             }
-            xbee_Serial.println('>');
-            index = 0;
-            for (int i = 0; i < sizeof(char_array);i++) {
-                char_array[i] = (char)0;
-            }
+            delay(20);
         }
     }
 }
 
-void xbee_transmit(String word) {
-    xbee_Serial.print('<');
-    xbee_Serial.print(word);
-    xbee_Serial.println('>');
-}
-
-char xbee_recieve() {
+void xbee_recieve_and_print() {
     while (xbee_Serial.available() > 0) {
+    /*
         incomingByte = xbee_Serial.read();
         if(incomingByte == '<') {
             started = true;
@@ -70,17 +72,16 @@ char xbee_recieve() {
     }
     if (started && ended) {
         Serial.print(cool_word); //Use this to debug, typeof(cool_word) == String
-        if (msg[0] != ' ') {
-            return_char = msg[0];
-        }
         cool_word = "";
         index = 0;
         msg[index] = '\0';
         started = false;
         ended = false;
-        return return_char;
-    }
-    else {
-        return '\0';
+        
+    }*/
+        incomingString = xbee_Serial.readString();
+        incomingString.remove(0,1);
+        incomingString.remove(incomingString.length()-3);
+        Serial.println(incomingString);
     }
 }
