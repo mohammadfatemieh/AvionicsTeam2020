@@ -42,7 +42,7 @@ char xbee_recieve() {
         }
     }
     if (started && ended) {
-        //Serial.print(cool_word); //Use this to debug, typeof(cool_word) == String
+        Serial.print(cool_word); //Use this to debug, typeof(cool_word) == String
         if (msg[0] != ' ') {
             return_char = msg[0];
         }
@@ -67,7 +67,15 @@ void xbee_transmit(String cool_word) {
 }
 
 void xbee_transmit(int value) {
-  xbee_Serial.print('<');
+    xbee_Serial.print('<');
+    xbee_Serial.print(value);
+    xbee_Serial.println('>');
+}
+
+void xbee_transmit(String cool_word, int value) {
+    xbee_Serial.print('<');
+    xbee_Serial.print(cool_word);
+    xbee_Serial.print(" ");
     xbee_Serial.print(value);
     xbee_Serial.println('>');
 }

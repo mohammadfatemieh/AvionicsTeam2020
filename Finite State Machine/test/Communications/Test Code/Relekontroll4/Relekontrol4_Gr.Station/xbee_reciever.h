@@ -13,7 +13,10 @@ void xbee_transmit(String cool_word);
 // Check if recieved a letter
 int xbee_Serial_available();
 
-// Sends number through xbee
+// Sends value through xbee
 void xbee_transmit(int value);
+
+// Send both string and value
+void xbee_transmit(String cool_word, int value);
 
 #endif /* XBEE_RECIEVER_H */

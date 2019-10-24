@@ -86,6 +86,7 @@ void ignition(char order){
         xbee_transmit("Caution: Rocket is about to arm. Confirm with Y/N");
         char confirmArm = ' ';
         while(true){
+          delay(20);
           confirmArm = xbee_recieve();
           if(confirmArm == 'Y'){
             digitalWrite(outArmPin, LOW);
