@@ -13,13 +13,15 @@ void setup() {
 void loop() {
   if(Serial.available() > 0){//Read from serial monitor and send over HC-12
     String input = Serial.readString();
-    mySerial.println(input);   
-    Serial.println(input); 
+    mySerial.println(input);
+    Serial.print("Sending: ");
+    Serial.println(input);
   }
  
   if(mySerial.available() > 1){//Read from HC-12 and send to serial monitor
     String input = mySerial.readString();
-    Serial.println(input);    
+    Serial.print("Recieved: ");
+    Serial.println(input); 
   }
   delay(20);
 }

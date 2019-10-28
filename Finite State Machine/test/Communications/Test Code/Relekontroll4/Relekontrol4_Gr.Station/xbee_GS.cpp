@@ -42,7 +42,8 @@ char xbee_recieve() {
         }
     }
     if (started && ended) {
-        Serial.print(cool_word); //Use this to debug, typeof(cool_word) == String
+        Serial.print("Recieved: ");
+        Serial.println(cool_word); //Use this to debug, typeof(cool_word) == String
         if (msg[0] != ' ') {
             return_char = msg[0];
         }
