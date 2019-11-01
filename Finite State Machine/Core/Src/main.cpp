@@ -90,7 +90,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
   auto statemachine = StateMachine<AState>();
 
   /* USER CODE END 2 */
@@ -100,7 +99,6 @@ int main(void)
   while (1)
   {
 	  statemachine.update();
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

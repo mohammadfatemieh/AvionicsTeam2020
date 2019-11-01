@@ -2,7 +2,6 @@
 /Debug/
 /Drivers/
 /Core/Startup
-/Core/Inc/main.h
 /Core/Inc/stm32f1xx_hal_conf.h
 /Core/Inc/stm32f1xx_it.h
 /Core/Src/stm32f1xx_hal_msp.c
