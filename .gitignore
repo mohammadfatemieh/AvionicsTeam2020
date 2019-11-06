@@ -1,2 +1,11 @@
 *.DS_Store
 *.xml
+*.o
+*.o
+*.o
+*.mk
+*.elf
+*.o
+*.d
+*.su
+*.elf
