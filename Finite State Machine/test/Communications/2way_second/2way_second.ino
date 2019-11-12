@@ -1,5 +1,3 @@
-//HC-12 messenger send/receive
-//autor Tom Heylen tomtomheylen.com
 
 #include <SoftwareSerial.h>
 
