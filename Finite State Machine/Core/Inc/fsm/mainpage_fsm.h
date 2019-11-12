@@ -6,6 +6,7 @@ Hello World
 
 \section Getting Started
 This is a quick guide of how to use the different components of the finite state machine. <br/>
+Etc.
 
 	\subsection Setting up States
 	To get started with states, you have to define a new C++ class that is (derived from) <b>State</b>. <br/>
