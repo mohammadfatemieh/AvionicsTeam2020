@@ -1,17 +1,13 @@
-/*
- * statemachine.h
- *
- *  Created on: Oct 27, 2019
- *      Author: Angelo
- */
-
 #ifndef INC_STATEMACHINE_H_
 #define INC_STATEMACHINE_H_
 
 
 #include "state.h"
 
-/** Finite State Machine */
+/** Finite State Machine
+ * Lmao
+ */
+
 template <typename S>
 class StateMachine {
 	State* activeState;

@@ -81,8 +81,8 @@ Disassembly of section .text:
  8000148:	08001aa4 	.word	0x08001aa4
 
 0800014c <_ZN5StateD1Ev>:
-
-/** State */
+ *
+ */
 class State {
 public:
     // Clean Up Transitions
