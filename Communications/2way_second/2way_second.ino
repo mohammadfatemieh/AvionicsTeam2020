@@ -16,9 +16,15 @@ void loop() {
     Serial.print(input);
   }
  
-  if(mySerial.available() > 1){//Read from HC-12 and send to serial monitor
-    String input = mySerial.readString();
-    Serial.println(input);    
+//  if(mySerial.available() > 1){//Read from HC-12 and send to serial monitor
+//    String input = mySerial.readString();
+//    Serial.println(input);    
+//  }
+
+if(mySerial.available() > 1){//Read from HC-12 and send to serial monitor
+    char input = mySerial.read();
+    Serial.print(input);
   }
   delay(20);
+
 }
