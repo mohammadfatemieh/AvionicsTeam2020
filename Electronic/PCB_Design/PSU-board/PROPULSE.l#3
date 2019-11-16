@@ -238,8 +238,8 @@
 <wire x1="-6.25" y1="-5.08" x2="-5.08" y2="-6.25" width="0.127" layer="21" curve="90"/>
 <wire x1="5.08" y1="-6.25" x2="6.25" y2="-5.08" width="0.127" layer="21" curve="90"/>
 <wire x1="6.25" y1="5.08" x2="5.08" y2="6.25" width="0.127" layer="21" curve="90"/>
-<smd name="P$1" x="0" y="5.35" dx="5.4" dy="3.9" layer="1"/>
-<smd name="P$2" x="0" y="-5.35" dx="5.4" dy="3.9" layer="1"/>
+<smd name="P$1" x="0" y="4.85" dx="5.4" dy="2.9" layer="1"/>
+<smd name="P$2" x="0" y="-4.85" dx="5.4" dy="2.9" layer="1"/>
 </package>
 <package name="PG-TO252-3-11">
 <description>&lt;b&gt;SMALL OUTLINE TRANSISTOR&lt;/b&gt;&lt;p&gt;
@@ -453,8 +453,8 @@ TS-003</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="SRR1280-5R6Y">
-<description>Power Inductor (SMD), 5.6 µH, 8 A, Shielded, 8.5 A, SRR1280 Series, 12.5mm x 12.5mm x 7.5mm</description>
+<deviceset name="SRR1260A-5R6Y">
+<description>Power Inductor (SMD), 5.6 µH, 6.7 A, Shielded, 6.9 A, SRR1260A Series, 12.5mm x 12.5mm x 6mm</description>
 <gates>
 <gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
 </gates>

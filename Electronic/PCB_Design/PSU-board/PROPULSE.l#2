@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="50" unitdist="mil" unit="mm" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -453,8 +453,8 @@ TS-003</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="SRR1280-5R6Y">
-<description>Power Inductor (SMD), 5.6 µH, 8 A, Shielded, 8.5 A, SRR1280 Series, 12.5mm x 12.5mm x 7.5mm</description>
+<deviceset name="SRR1260A-5R6Y">
+<description>Power Inductor (SMD), 5.6 µH, 6.7 A, Shielded, 6.9 A, SRR1260A Series, 12.5mm x 12.5mm x 6mm</description>
 <gates>
 <gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
 </gates>

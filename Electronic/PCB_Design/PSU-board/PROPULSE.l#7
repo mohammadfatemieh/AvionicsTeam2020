@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="yes"/>
@@ -238,8 +238,8 @@
 <wire x1="-6.25" y1="-5.08" x2="-5.08" y2="-6.25" width="0.127" layer="21" curve="90"/>
 <wire x1="5.08" y1="-6.25" x2="6.25" y2="-5.08" width="0.127" layer="21" curve="90"/>
 <wire x1="6.25" y1="5.08" x2="5.08" y2="6.25" width="0.127" layer="21" curve="90"/>
-<smd name="P$1" x="0" y="5.35" dx="5.4" dy="3.9" layer="1"/>
-<smd name="P$2" x="0" y="-5.35" dx="5.4" dy="3.9" layer="1"/>
+<smd name="P$1" x="0" y="4.85" dx="5.4" dy="2.9" layer="1"/>
+<smd name="P$2" x="0" y="-4.85" dx="5.4" dy="2.9" layer="1"/>
 </package>
 <package name="PG-TO252-3-11">
 <description>&lt;b&gt;SMALL OUTLINE TRANSISTOR&lt;/b&gt;&lt;p&gt;
@@ -274,43 +274,6 @@ TS-003</description>
 <vertex x="2.5654" y="4.6482"/>
 <vertex x="2.5654" y="3.937"/>
 </polygon>
-</package>
-<package name="TO-277A">
-<smd name="1" x="0" y="2.5652" dx="4.8" dy="5.2" layer="1"/>
-<smd name="2" x="-1.04" y="-1.445" dx="1.4" dy="1.27" layer="1"/>
-<smd name="3" x="1.04" y="-1.445" dx="1.4" dy="1.27" layer="1"/>
-<wire x1="-2" y1="4.6" x2="2" y2="4.6" width="0.127" layer="21"/>
-<wire x1="2" y1="4.6" x2="2" y2="1.05" width="0.127" layer="21"/>
-<wire x1="2" y1="0.3" x2="2" y2="-1.5" width="0.127" layer="21"/>
-<wire x1="2" y1="-1.5" x2="-2" y2="-1.5" width="0.127" layer="21"/>
-<wire x1="-2" y1="-1.5" x2="-2" y2="0.3" width="0.127" layer="21"/>
-<polygon width="0.127" layer="21">
-<vertex x="-1" y="4.8"/>
-<vertex x="1" y="4.8"/>
-<vertex x="1" y="4.6"/>
-<vertex x="-1" y="4.6"/>
-</polygon>
-<polygon width="0.127" layer="21">
-<vertex x="-1.665" y="-1.5"/>
-<vertex x="-1.665" y="-1.7"/>
-<vertex x="-0.465" y="-1.7"/>
-<vertex x="-0.465" y="-1.5"/>
-</polygon>
-<polygon width="0.127" layer="21">
-<vertex x="0.465" y="-1.5"/>
-<vertex x="0.465" y="-1.7"/>
-<vertex x="1.665" y="-1.7"/>
-<vertex x="1.665" y="-1.5"/>
-</polygon>
-<wire x1="-2" y1="1.05" x2="-2" y2="4.6" width="0.127" layer="21"/>
-<wire x1="-2" y1="0.3" x2="-2.1" y2="0.3" width="0.127" layer="21"/>
-<wire x1="-2.1" y1="0.3" x2="-2.1" y2="1.05" width="0.127" layer="21"/>
-<wire x1="-2.1" y1="1.05" x2="-2" y2="1.05" width="0.127" layer="21"/>
-<wire x1="-2" y1="1.05" x2="-2" y2="0.3" width="0.127" layer="21"/>
-<wire x1="2" y1="1.05" x2="2.1" y2="1.05" width="0.127" layer="21"/>
-<wire x1="2.1" y1="1.05" x2="2.1" y2="0.3" width="0.127" layer="21"/>
-<wire x1="2.1" y1="0.3" x2="2" y2="0.3" width="0.127" layer="21"/>
-<wire x1="2" y1="0.3" x2="2" y2="1.05" width="0.127" layer="21"/>
 </package>
 </packages>
 <packages3d>
@@ -403,22 +366,6 @@ TS-003</description>
 <vertex x="2.032" y="-0.762"/>
 </polygon>
 </symbol>
-<symbol name="SCHOTTKY-DIODE">
-<wire x1="0.254" y1="1.016" x2="0.254" y2="1.524" width="0.1524" layer="94"/>
-<wire x1="0.254" y1="1.524" x2="0.762" y2="1.524" width="0.1524" layer="94"/>
-<wire x1="0.762" y1="1.524" x2="0.762" y2="-1.524" width="0.1524" layer="94"/>
-<wire x1="0.762" y1="-1.524" x2="1.27" y2="-1.524" width="0.1524" layer="94"/>
-<wire x1="1.27" y1="-1.524" x2="1.27" y2="-1.016" width="0.1524" layer="94"/>
-<text x="5.08" y="6.35" size="1.778" layer="95" rot="R180">&gt;NAME</text>
-<text x="5.08" y="3.81" size="1.778" layer="96" rot="R180">&gt;VALUE</text>
-<pin name="A" x="-2.54" y="0" visible="off" length="short" direction="pas"/>
-<pin name="C" x="2.54" y="0" visible="off" length="short" direction="pas" rot="R180"/>
-<polygon width="0.1524" layer="94">
-<vertex x="0.762" y="0"/>
-<vertex x="-1.016" y="1.016"/>
-<vertex x="-1.016" y="-1.016"/>
-</polygon>
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="IFX81481ELVXUMA1" prefix="U" uservalue="yes">
@@ -453,8 +400,8 @@ TS-003</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="SRR1280-5R6Y">
-<description>Power Inductor (SMD), 5.6 µH, 8 A, Shielded, 8.5 A, SRR1280 Series, 12.5mm x 12.5mm x 7.5mm</description>
+<deviceset name="SRR1260A-5R6Y">
+<description>Power Inductor (SMD), 5.6 µH, 6.7 A, Shielded, 6.9 A, SRR1260A Series, 12.5mm x 12.5mm x 6mm</description>
 <gates>
 <gate name="G$1" symbol="INDUCTOR" x="0" y="0"/>
 </gates>
@@ -482,23 +429,6 @@ TS-003</description>
 <connect gate="G$1" pin="D" pad="2"/>
 <connect gate="G$1" pin="G" pad="1"/>
 <connect gate="G$1" pin="S" pad="3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="STPS10M60SF">
-<description>Schottky Rectifier, 60 V, 10 A, Single, TO-277A, 3 Pins, 650 mV</description>
-<gates>
-<gate name="A" symbol="SCHOTTKY-DIODE" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="TO-277A">
-<connects>
-<connect gate="A" pin="A" pad="2 3"/>
-<connect gate="A" pin="C" pad="1"/>
 </connects>
 <technologies>
 <technology name=""/>
