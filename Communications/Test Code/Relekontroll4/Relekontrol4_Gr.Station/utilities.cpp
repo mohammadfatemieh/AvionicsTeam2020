@@ -1,4 +1,5 @@
 #include "arduino.h"
+#include "xbee_GS.h"
 
 #define outDumpPin 13
 #define outFillPin 12
@@ -85,7 +86,8 @@ void ignition(char order){
         xbee_transmit("Caution: Rocket is about to arm. Confirm with Y/N");
         char confirmArm = ' ';
         while(true){
-          confirmArm = xbee_Serial.read();
+          delay(20);
+          confirmArm = xbee_recieve();
           if(confirmArm == 'Y'){
             digitalWrite(outArmPin, LOW);
             armingStatus = 1;
@@ -97,7 +99,7 @@ void ignition(char order){
             xbee_transmit("Arming cancelled");
             break;
           }
-          else if (xbee_Serial.available()){
+          else if (xbee_Serial_available() > 0){
             xbee_transmit("To Arm: Type 'Y', otherwise 'N'");
           }
         }
@@ -133,14 +135,13 @@ void ignition(char order){
 void statusCheck(char check){
     if (check == 'S'){
         xbee_transmit("\nCurrent status is:\n");
-        xbee_transmit("Dumpstatus is: ");
-        xbee_transmit(dumpStatus);
-        xbee_transmit("Airing status is: ");
-        xbee_transmit(airingStatus);
-        xbee_transmit("Filling status is: ");
-        xbee_transmit(fillStatus);
-        xbee_transmit("Arming status is: ");
-        xbee_transmit(armingStatus);
-        xbee_transmit();
+        xbee_transmit("Dumpstatus is: ", dumpStatus);
+        //xbee_transmit(dumpStatus);
+        xbee_transmit("Airing status is: ", airingStatus);
+        //xbee_transmit(airingStatus);
+        xbee_transmit("Filling status is: ", fillStatus);
+        //xbee_transmit(fillStatus);
+        xbee_transmit("Arming status is: ", armingStatus);
+        //xbee_transmit(armingStatus);
     }
 }

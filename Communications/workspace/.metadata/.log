@@ -1,0 +1,16 @@
+!SESSION 2019-11-11 14:10:29.115 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_131
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=no_NO
+Framework arguments:  -clearPersistedState C:\Users\Bruker\OneDrive – NTNU\Personal\Documents\Ikke-skole\Propulse\AvionicsTeam2020\Finite State Machine\test\Communications\2way-com.xpro
+Command-line arguments:  -os win32 -ws win32 -arch x86 -clearPersistedState C:\Users\Bruker\OneDrive – NTNU\Personal\Documents\Ikke-skole\Propulse\AvionicsTeam2020\Finite State Machine\test\Communications\2way-com.xpro
+
+!ENTRY org.eclipse.ui 2 2 2019-11-11 14:10:34.052
+!MESSAGE Perspective with name 'Configuration perspective' and id 'com.digi.xctung.perspectives.configurationPerspective' has been made into a local copy
+
+!ENTRY org.eclipse.ui 2 2 2019-11-11 14:10:34.104
+!MESSAGE Invalid preference category path: org.eclipse.equinox.internal.p2.ui.sdk.ProvisioningPreferencePage (bundle: org.eclipse.equinox.p2.ui.sdk.scheduler, page: org.eclipse.equinox.internal.p2.ui.sdk.scheduler.AutomaticUpdatesPreferencePage)
+
+!ENTRY org.eclipse.equinox.p2.repository 2 0 2019-11-11 14:10:45.263
+!MESSAGE Server returned lastModified <= 0 for ftp://ftp1.digi.com/support/XCTU-NG/java_18/repository/content.xml
