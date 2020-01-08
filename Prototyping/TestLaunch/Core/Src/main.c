@@ -112,6 +112,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
   char buffer[80] = {0};
+
+  int accelZ=0, accelY=0, accelX=0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,23 +123,26 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+
+		// dummy read
+		HAL_ADC_Start(&hadc1);
+		HAL_ADC_PollForConversion(&hadc1, 100);
+		accelZ = HAL_ADC_GetValue(&hadc1) - 2048;
 
 		HAL_ADC_Start(&hadc1);
 		HAL_ADC_PollForConversion(&hadc1, 100);
-		int accelZ = -(HAL_ADC_GetValue(&hadc1) - 2048);
+		accelY = HAL_ADC_GetValue(&hadc1) - 2048;
 
+		HAL_ADC_Start(&hadc1);
 		HAL_ADC_PollForConversion(&hadc1, 100);
-		int accelY = -(HAL_ADC_GetValue(&hadc1) - 2048);
+		accelX = HAL_ADC_GetValue(&hadc1) - 2048;
 
-		HAL_ADC_PollForConversion(&hadc1, 100);
-		int accelX = (HAL_ADC_GetValue(&hadc1) - 2048);
-		HAL_ADC_Stop(&hadc1);
 
+		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
 		// send data over UART1 (TX = A9, RX = A10)
-		snprintf(buffer, sizeof(buffer), "%5d %5d %5d\r\n", accelX, accelY, accelZ);
+		snprintf(buffer, sizeof(buffer), "%6.3f %6.3f %6.3f\r\n", ((float)accelX) / 372.0 + 0.250, ((float)accelY) / 372.0 + 0.250, ((float)accelZ) / 372.0);
+		//snprintf(buffer, sizeof(buffer), "%5d %5d %5d\r\n", accelX, accelY, accelZ);
 		HAL_UART_Transmit(&huart1, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
-
 		HAL_Delay(1);
   }
   /* USER CODE END 3 */
@@ -208,8 +213,9 @@ static void MX_ADC1_Init(void)
   */
   hadc1.Instance = ADC1;
   hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
-  hadc1.Init.ContinuousConvMode = ENABLE;
-  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.DiscontinuousConvMode = ENABLE;
+  hadc1.Init.NbrOfDiscConversion = 1;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 3;
@@ -219,7 +225,7 @@ static void MX_ADC1_Init(void)
   }
   /** Configure Regular Channel 
   */
-  sConfig.Channel = ADC_CHANNEL_0;
+  sConfig.Channel = ADC_CHANNEL_9;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
