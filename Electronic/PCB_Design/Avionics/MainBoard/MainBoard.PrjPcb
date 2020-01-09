@@ -106,23 +106,6 @@ GenerateClassCluster=0
 DocumentUniqueId=YGOEQZRV
 
 [Document5]
-DocumentPath=Test.SchDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=ELEUIPMK
-
-[Document6]
 DocumentPath=MainBoard.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
