@@ -133,6 +133,13 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 GenerateClassCluster=0
 
+[DeviceSheet2]
+DocumentPath=..\SharedScheets\StackingConnector.SchDoc
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+GenerateClassCluster=0
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
