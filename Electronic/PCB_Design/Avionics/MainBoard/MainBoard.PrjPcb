@@ -95,7 +95,7 @@ AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
 AnnotateSuffix=
 AnnotateScope=All
-AnnotateOrder=0
+AnnotateOrder=-1
 DoLibraryUpdate=1
 DoDatabaseUpdate=1
 ClassGenCCAutoEnabled=1
@@ -106,7 +106,7 @@ GenerateClassCluster=0
 DocumentUniqueId=YGOEQZRV
 
 [Document5]
-DocumentPath=MainBoard.PcbDoc
+DocumentPath=..\Libraries\Integrated_Library.IntLib
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -120,7 +120,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=IHPJFQGO
+DocumentUniqueId=
 
 [DeviceSheetFolder1]
 Path=D:\Propulse\AvionicsTeam2020\Electronic\PCB_Design\Avionics\SharedScheets\
@@ -259,7 +259,7 @@ OutputDefault20=0
 [OutputGroup2]
 Name=Simulator Outputs
 Description=
-TargetPrinter=Microsoft Print to PDF
+TargetPrinter=\\followprint.win.ntnu.no\ntnuprint-ricoh
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
 
 [OutputGroup3]
@@ -1011,7 +1011,7 @@ Type55=1
 Type56=2
 Type57=1
 Type58=1
-Type59=1
+Type59=2
 Type60=0
 Type61=0
 Type62=0
@@ -1117,7 +1117,7 @@ NetClassManualEnabled=1
 NetClassSeparateForBusSections=0
 
 [LibraryUpdateOptions]
-SelectedOnly=1
+SelectedOnly=0
 UpdateVariants=1
 UpdateToLatestRevision=1
 PartTypes=0
