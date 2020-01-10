@@ -1,0 +1,131 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc
+Date     : 1/10/2020
+Time     : 5:27:19 PM
+
+Processing Rule : Clearance Constraint (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(70.137mm,25.127mm) on Multi-Layer And Pad J1-1(72.137mm,25.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(70.137mm,31.127mm) on Multi-Layer And Pad J1-1(72.137mm,31.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(70.137mm,37.127mm) on Multi-Layer And Pad J1-1(72.137mm,37.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (55.08mm,39mm) from Top Layer to Bottom Layer And Pad J1-1(70.137mm,37.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,21.127mm) on Multi-Layer And Pad J1-1(72.137mm,23.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (55mm,15.452mm) from Top Layer to Bottom Layer And Pad J1-1(72.137mm,21.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,23.127mm) on Multi-Layer And Pad J1-1(72.137mm,25.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,25.127mm) on Multi-Layer And Pad J1-1(72.137mm,27.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,27.127mm) on Multi-Layer And Pad J1-1(72.137mm,29.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,29.127mm) on Multi-Layer And Pad J1-1(72.137mm,31.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,31.127mm) on Multi-Layer And Pad J1-1(72.137mm,33.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,33.127mm) on Multi-Layer And Pad J1-1(72.137mm,35.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,35.127mm) on Multi-Layer And Pad J1-1(72.137mm,37.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,37.127mm) on Multi-Layer And Pad J1-1(72.137mm,39.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,39.127mm) on Multi-Layer And Pad J1-1(72.137mm,41.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,41.127mm) on Multi-Layer And Pad J1-1(72.137mm,43.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,43.127mm) on Multi-Layer And Pad J1-1(72.137mm,45.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,45.127mm) on Multi-Layer And Pad J1-1(72.137mm,47.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,47.127mm) on Multi-Layer And Pad J1-1(72.137mm,49.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,49.127mm) on Multi-Layer And Pad J1-1(72.137mm,51.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,51.127mm) on Multi-Layer And Pad J1-1(72.137mm,53.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,53.127mm) on Multi-Layer And Pad J1-1(72.137mm,55.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,55.127mm) on Multi-Layer And Pad J1-1(72.137mm,57.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,57.127mm) on Multi-Layer And Pad J1-1(72.137mm,59.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (62mm,69mm) from Top Layer to Bottom Layer And Pad J1-1(72.137mm,59.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,43.127mm) on Multi-Layer And Pad J1-2(10.137mm,43.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(10.137mm,43.127mm) on Multi-Layer And Via (22.08mm,41.332mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,49.127mm) on Multi-Layer And Pad J1-2(10.137mm,49.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,55.127mm) on Multi-Layer And Pad J1-2(10.137mm,55.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,21.127mm) on Multi-Layer And Pad J1-2(8.137mm,23.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,23.127mm) on Multi-Layer And Pad J1-2(8.137mm,25.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,25.127mm) on Multi-Layer And Pad J1-2(8.137mm,27.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,27.127mm) on Multi-Layer And Pad J1-2(8.137mm,29.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,29.127mm) on Multi-Layer And Pad J1-2(8.137mm,31.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,31.127mm) on Multi-Layer And Pad J1-2(8.137mm,33.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,33.127mm) on Multi-Layer And Pad J1-2(8.137mm,35.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,35.127mm) on Multi-Layer And Pad J1-2(8.137mm,37.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,37.127mm) on Multi-Layer And Pad J1-2(8.137mm,39.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,39.127mm) on Multi-Layer And Pad J1-2(8.137mm,41.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,41.127mm) on Multi-Layer And Pad J1-2(8.137mm,43.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,43.127mm) on Multi-Layer And Pad J1-2(8.137mm,45.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,45.127mm) on Multi-Layer And Pad J1-2(8.137mm,47.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,47.127mm) on Multi-Layer And Pad J1-2(8.137mm,49.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,49.127mm) on Multi-Layer And Pad J1-2(8.137mm,51.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,51.127mm) on Multi-Layer And Pad J1-2(8.137mm,53.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,53.127mm) on Multi-Layer And Pad J1-2(8.137mm,55.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,55.127mm) on Multi-Layer And Pad J1-2(8.137mm,57.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,57.127mm) on Multi-Layer And Pad J1-2(8.137mm,59.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,59.127mm) on Multi-Layer And Via (18.82mm,74.004mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net 3.3V Between Pad J1-3(70.137mm,21.127mm) on Multi-Layer And Pad J1-3(70.137mm,23.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net 3.3V Between Via (27.16mm,41.332mm) from Top Layer to Bottom Layer And Pad J1-3(70.137mm,23.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net 3.3V Between Pad J1-4(10.137mm,57.127mm) on Multi-Layer And Pad J1-4(10.137mm,59.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net 3.3V Between Pad J1-4(10.137mm,57.127mm) on Multi-Layer And Via (17mm,52mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net 5V Between Pad J1-5(70.137mm,27.127mm) on Multi-Layer And Pad J1-5(70.137mm,29.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net 5V Between Via (57.62mm,39mm) from Top Layer to Bottom Layer And Pad J1-5(70.137mm,29.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net 5V Between Pad J1-6(10.137mm,51.127mm) on Multi-Layer And Pad J1-6(10.137mm,53.127mm) on Multi-Layer 
+   Violation between Un-Routed Net Constraint: Net 5V Between Pad J1-6(10.137mm,51.127mm) on Multi-Layer And Via (57.62mm,39mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net EN Between Via (17mm,41.332mm) from Top Layer to Bottom Layer And Via (23.9mm,62.599mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net EN Between Via (17mm,41.332mm) from Top Layer to Bottom Layer And Via (50mm,39mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net 3.3V Between Via (17mm,52mm) from Top Layer to Bottom Layer And Via (27.16mm,41.332mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net BAT2 Between Via (18.82mm,69mm) from Top Layer to Bottom Layer And Via (52.54mm,39mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net BAT1 Between Via (19.54mm,41.332mm) from Top Layer to Bottom Layer And Via (62.2mm,15.452mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (22.08mm,41.332mm) from Top Layer to Bottom Layer And Via (24.62mm,41.332mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (24.62mm,41.332mm) from Top Layer to Bottom Layer And Via (55.08mm,39mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net GND Between Via (35.8mm,15.452mm) from Top Layer to Bottom Layer And Via (55mm,15.452mm) from Top Layer to Bottom Layer 
+   Violation between Un-Routed Net Constraint: Net BAT2 Between Via (43mm,15.452mm) from Top Layer to Bottom Layer And Via (52.54mm,39mm) from Top Layer to Bottom Layer 
+Rule Violations :66
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=0.254mm) (Max=0.254mm) (Preferred=0.254mm) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)
+   Violation between Hole Size Constraint: (2.6mm > 2.54mm) Via (35.8mm,15.452mm) from Top Layer to Bottom Layer Actual Hole Size = 2.6mm
+   Violation between Hole Size Constraint: (2.6mm > 2.54mm) Via (43mm,15.452mm) from Top Layer to Bottom Layer Actual Hole Size = 2.6mm
+   Violation between Hole Size Constraint: (2.6mm > 2.54mm) Via (55mm,15.452mm) from Top Layer to Bottom Layer Actual Hole Size = 2.6mm
+   Violation between Hole Size Constraint: (2.6mm > 2.54mm) Via (62.2mm,15.452mm) from Top Layer to Bottom Layer Actual Hole Size = 2.6mm
+Rule Violations :4
+
+Processing Rule : Hole To Hole Clearance (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)
+   Violation between Silk To Solder Mask Clearance Constraint: (0.248mm < 0.254mm) Between Pad J2-0(55mm,15.452mm) on Top Layer And Track (50.85mm,17.377mm)(66.35mm,17.377mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (0.248mm < 0.254mm) Between Pad J2-1(62.2mm,15.452mm) on Top Layer And Track (50.85mm,17.377mm)(66.35mm,17.377mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (0.248mm < 0.254mm) Between Pad J3-0(35.8mm,15.452mm) on Top Layer And Track (31.65mm,17.377mm)(47.15mm,17.377mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]
+   Violation between Silk To Solder Mask Clearance Constraint: (0.248mm < 0.254mm) Between Pad J3-1(43mm,15.452mm) on Top Layer And Track (31.65mm,17.377mm)(47.15mm,17.377mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]
+Rule Violations :4
+
+Processing Rule : Silk to Silk (Clearance=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mm) (All)
+Rule Violations :0
+
+Processing Rule : Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB'))
+   Violation between Room Definition: Between Component J1-StackingConnector (80.137mm,80.127mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) 
+   Violation between Room Definition: Between Component U1-Pololu 24V STEP-UP (64.54mm,61.304mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) 
+   Violation between Room Definition: Between Component U3-Pololu 3.3V STEP-DOWN (15.73mm,40.062mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) 
+   Violation between Room Definition: Between Edge Component J2-XT60 90deg (62.2mm,15.452mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) 
+   Violation between Room Definition: Between Edge Component J3-XT60 90deg (43mm,15.452mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) 
+   Violation between Room Definition: Between Edge Component U2-Pololu 5V STEP-DOWN (41.745mm,37.73mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) 
+Rule Violations :6
+
+Processing Rule : Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)
+Rule Violations :0
+
+
+Violations Detected : 80
+Waived Violations : 0
+Time Elapsed        : 00:00:01

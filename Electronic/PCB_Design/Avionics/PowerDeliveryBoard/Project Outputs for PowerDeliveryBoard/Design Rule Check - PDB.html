@@ -1,0 +1,584 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 8em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD20\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">1/10/2020</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">5:27:19 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc" class="file"><acronym title="C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc">C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">80</td></tr>
+</table>
+</td>
+</table><a name="IDBKBIGRJB4TOLHKD1B4ZKA55DMHT43YAJLX0UANJTQUXZ5XE1RJIG"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAPPWAKP3LXQAN4SVJUINJBJL5CT4K5O0FPKHHIM01N5WUVBWK5MP">Clearance Constraint (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDFKMGZEBPEV50CZXEOD0OOM3L2H5CHGHSMY1EE5C0FOPKOCZAYRGE">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDTLRL3ZBSYOTODKV3SZD2XZVSVFKJILD5LLMALJK1IMVQVW4AWF0L">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">66</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDDCZW4IC4FXURKEU2QXEJBFPKKHAA5IZG4ZPR1H1AARNNMDRRMDC">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDDRW1DBS0UNQRIHVYSHGPASP4YNZRDDG22E50ACBZH11VRV1JAB0H">Width Constraint (Min=0.254mm) (Max=0.254mm) (Preferred=0.254mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID44QH0NNFQ3YOG42JPPOVV340CI30ST2XUJZ21ETNWJJV42DE5AH">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDUOLK43X5NWEYED5YLCKOJI1RCLYVBBAIPHSSJM1KWUZJHCSYY0N">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDGJZ5SMVKWAGVPY43DSQYQZR5MEZSVTP5LFFNCGC0IL31IWDDYUDM">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDT5HIELULIHOILSKUEYZOXKMPIFXYDILH0PXOMILWIR4EL025BCWP">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDCFJGVTTI04YZB5EQB1DKMGU4YLTNXM1EYCULDZFUG0PAVXFDHIAF">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDQL1UHU5HVAPUH4SLCHVMWYGD0C2Z2UNMAXDBURDDFNTD2KNPYCGG">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDQEZZALKNNAUWF4S4UDBQUNJP1PZ2VHILR3F2NHEDZCUASKWTRF2O">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDU5RVTMZUIPRDAYBFDOPFHKB4LLN5DXEX4S1WSDBCT11SNZULEBM">Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB'))</a></td>
+<td class="column2">6</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDJWYCSD2JCCAJPX1TAPAMNJ5X2BNRQYVGU2IMBTB423KHJO5TPNNO">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">80</td>
+</tr>
+</table><br><a name="IDTLRL3ZBSYOTODKV3SZD2XZVSVFKJILD5LLMALJK1IMVQVW4AWF0L"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2873.567mil|Location1.Y=955.725mil|Location2.Y=1022.779mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2873.567mil|Location1.Y=955.725mil|Location2.Y=1022.779mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(70.137mm,25.127mm) on Multi-Layer And Pad J1-1(72.137mm,25.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2873.567mil|Location1.Y=1191.945mil|Location2.Y=1259mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2873.567mil|Location1.Y=1191.945mil|Location2.Y=1259mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(70.137mm,31.127mm) on Multi-Layer And Pad J1-1(72.137mm,31.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2873.567mil|Location1.Y=1428.165mil|Location2.Y=1495.22mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2873.567mil|Location1.Y=1428.165mil|Location2.Y=1495.22mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(70.137mm,37.127mm) on Multi-Layer And Pad J1-1(72.137mm,37.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2144.504mil|Location2.X=2794.827mil|Location1.Y=1428.165mil|Location2.Y=1559.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2144.504mil|Location2.X=2794.827mil|Location1.Y=1428.165mil|Location2.Y=1559.433mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Via (55.08mm,39mm) from Top Layer to Bottom Layer And Pad J1-1(70.137mm,37.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=798.244mil|Location2.Y=944.039mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=798.244mil|Location2.Y=944.039mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,21.127mm) on Multi-Layer And Pad J1-1(72.137mm,23.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2110.173mil|Location2.X=2873.567mil|Location1.Y=553.165mil|Location2.Y=865.299mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2110.173mil|Location2.X=2873.567mil|Location1.Y=553.165mil|Location2.Y=865.299mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Via (55mm,15.452mm) from Top Layer to Bottom Layer And Pad J1-1(72.137mm,21.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=876.984mil|Location2.Y=1022.779mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=876.984mil|Location2.Y=1022.779mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,23.127mm) on Multi-Layer And Pad J1-1(72.137mm,25.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=955.725mil|Location2.Y=1101.52mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=955.725mil|Location2.Y=1101.52mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,25.127mm) on Multi-Layer And Pad J1-1(72.137mm,27.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1034.465mil|Location2.Y=1180.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1034.465mil|Location2.Y=1180.26mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,27.127mm) on Multi-Layer And Pad J1-1(72.137mm,29.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1113.205mil|Location2.Y=1259mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1113.205mil|Location2.Y=1259mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,29.127mm) on Multi-Layer And Pad J1-1(72.137mm,31.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1191.945mil|Location2.Y=1337.74mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1191.945mil|Location2.Y=1337.74mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,31.127mm) on Multi-Layer And Pad J1-1(72.137mm,33.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1270.685mil|Location2.Y=1416.48mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1270.685mil|Location2.Y=1416.48mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,33.127mm) on Multi-Layer And Pad J1-1(72.137mm,35.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1349.425mil|Location2.Y=1495.22mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1349.425mil|Location2.Y=1495.22mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,35.127mm) on Multi-Layer And Pad J1-1(72.137mm,37.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1428.165mil|Location2.Y=1573.961mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1428.165mil|Location2.Y=1573.961mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,37.127mm) on Multi-Layer And Pad J1-1(72.137mm,39.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1506.906mil|Location2.Y=1652.701mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1506.906mil|Location2.Y=1652.701mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,39.127mm) on Multi-Layer And Pad J1-1(72.137mm,41.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1585.646mil|Location2.Y=1731.441mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1585.646mil|Location2.Y=1731.441mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,41.127mm) on Multi-Layer And Pad J1-1(72.137mm,43.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1664.386mil|Location2.Y=1810.181mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1664.386mil|Location2.Y=1810.181mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,43.127mm) on Multi-Layer And Pad J1-1(72.137mm,45.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1743.126mil|Location2.Y=1888.921mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1743.126mil|Location2.Y=1888.921mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,45.127mm) on Multi-Layer And Pad J1-1(72.137mm,47.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1821.866mil|Location2.Y=1967.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1821.866mil|Location2.Y=1967.661mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,47.127mm) on Multi-Layer And Pad J1-1(72.137mm,49.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1900.606mil|Location2.Y=2046.402mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1900.606mil|Location2.Y=2046.402mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,49.127mm) on Multi-Layer And Pad J1-1(72.137mm,51.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1979.347mil|Location2.Y=2125.142mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=1979.347mil|Location2.Y=2125.142mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,51.127mm) on Multi-Layer And Pad J1-1(72.137mm,53.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=2058.087mil|Location2.Y=2203.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=2058.087mil|Location2.Y=2203.882mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,53.127mm) on Multi-Layer And Pad J1-1(72.137mm,55.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=2136.827mil|Location2.Y=2282.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=2136.827mil|Location2.Y=2282.622mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,55.127mm) on Multi-Layer And Pad J1-1(72.137mm,57.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=2215.567mil|Location2.Y=2361.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2806.512mil|Location2.X=2873.567mil|Location1.Y=2215.567mil|Location2.Y=2361.362mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-1(72.137mm,57.127mm) on Multi-Layer And Pad J1-1(72.137mm,59.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2393.945mil|Location2.X=2873.567mil|Location1.Y=2294.307mil|Location2.Y=2763.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2393.945mil|Location2.X=2873.567mil|Location1.Y=2294.307mil|Location2.Y=2763.535mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Via (62mm,69mm) from Top Layer to Bottom Layer And Pad J1-1(72.137mm,59.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=432.622mil|Location1.Y=1664.386mil|Location2.Y=1731.441mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=432.622mil|Location1.Y=1664.386mil|Location2.Y=1731.441mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,43.127mm) on Multi-Layer And Pad J1-2(10.137mm,43.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=893.291mil|Location1.Y=1603.244mil|Location2.Y=1731.441mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=893.291mil|Location1.Y=1603.244mil|Location2.Y=1731.441mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(10.137mm,43.127mm) on Multi-Layer And Via (22.08mm,41.332mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=432.622mil|Location1.Y=1900.606mil|Location2.Y=1967.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=432.622mil|Location1.Y=1900.606mil|Location2.Y=1967.661mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,49.127mm) on Multi-Layer And Pad J1-2(10.137mm,49.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=432.622mil|Location1.Y=2136.827mil|Location2.Y=2203.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=432.622mil|Location1.Y=2136.827mil|Location2.Y=2203.882mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,55.127mm) on Multi-Layer And Pad J1-2(10.137mm,55.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=798.244mil|Location2.Y=944.039mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=798.244mil|Location2.Y=944.039mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,21.127mm) on Multi-Layer And Pad J1-2(8.137mm,23.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=876.984mil|Location2.Y=1022.779mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=876.984mil|Location2.Y=1022.779mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,23.127mm) on Multi-Layer And Pad J1-2(8.137mm,25.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=955.725mil|Location2.Y=1101.52mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=955.725mil|Location2.Y=1101.52mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,25.127mm) on Multi-Layer And Pad J1-2(8.137mm,27.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1034.465mil|Location2.Y=1180.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1034.465mil|Location2.Y=1180.26mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,27.127mm) on Multi-Layer And Pad J1-2(8.137mm,29.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1113.205mil|Location2.Y=1259mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1113.205mil|Location2.Y=1259mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,29.127mm) on Multi-Layer And Pad J1-2(8.137mm,31.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1191.945mil|Location2.Y=1337.74mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1191.945mil|Location2.Y=1337.74mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,31.127mm) on Multi-Layer And Pad J1-2(8.137mm,33.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1270.685mil|Location2.Y=1416.48mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1270.685mil|Location2.Y=1416.48mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,33.127mm) on Multi-Layer And Pad J1-2(8.137mm,35.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1349.425mil|Location2.Y=1495.22mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1349.425mil|Location2.Y=1495.22mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,35.127mm) on Multi-Layer And Pad J1-2(8.137mm,37.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1428.166mil|Location2.Y=1573.961mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1428.166mil|Location2.Y=1573.961mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,37.127mm) on Multi-Layer And Pad J1-2(8.137mm,39.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1506.906mil|Location2.Y=1652.701mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1506.906mil|Location2.Y=1652.701mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,39.127mm) on Multi-Layer And Pad J1-2(8.137mm,41.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1585.646mil|Location2.Y=1731.441mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1585.646mil|Location2.Y=1731.441mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,41.127mm) on Multi-Layer And Pad J1-2(8.137mm,43.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1664.386mil|Location2.Y=1810.181mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1664.386mil|Location2.Y=1810.181mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,43.127mm) on Multi-Layer And Pad J1-2(8.137mm,45.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1743.126mil|Location2.Y=1888.921mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1743.126mil|Location2.Y=1888.921mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,45.127mm) on Multi-Layer And Pad J1-2(8.137mm,47.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1821.866mil|Location2.Y=1967.661mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1821.866mil|Location2.Y=1967.661mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,47.127mm) on Multi-Layer And Pad J1-2(8.137mm,49.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1900.606mil|Location2.Y=2046.402mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1900.606mil|Location2.Y=2046.402mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,49.127mm) on Multi-Layer And Pad J1-2(8.137mm,51.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1979.347mil|Location2.Y=2125.142mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=1979.347mil|Location2.Y=2125.142mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,51.127mm) on Multi-Layer And Pad J1-2(8.137mm,53.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=2058.087mil|Location2.Y=2203.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=2058.087mil|Location2.Y=2203.882mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,53.127mm) on Multi-Layer And Pad J1-2(8.137mm,55.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=2136.827mil|Location2.Y=2282.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=2136.827mil|Location2.Y=2282.622mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,55.127mm) on Multi-Layer And Pad J1-2(8.137mm,57.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=2215.567mil|Location2.Y=2361.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=353.882mil|Location1.Y=2215.567mil|Location2.Y=2361.362mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,57.127mm) on Multi-Layer And Pad J1-2(8.137mm,59.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=787.945mil|Location1.Y=2294.307mil|Location2.Y=2960.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=286.827mil|Location2.X=787.945mil|Location1.Y=2294.307mil|Location2.Y=2960.535mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad J1-2(8.137mm,59.127mm) on Multi-Layer And Via (18.82mm,74.004mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2794.827mil|Location1.Y=798.244mil|Location2.Y=944.039mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2794.827mil|Location1.Y=798.244mil|Location2.Y=944.039mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad J1-3(70.137mm,21.127mm) on Multi-Layer And Pad J1-3(70.137mm,23.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1045.291mil|Location2.X=2794.827mil|Location1.Y=876.984mil|Location2.Y=1651.244mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1045.291mil|Location2.X=2794.827mil|Location1.Y=876.984mil|Location2.Y=1651.244mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Via (27.16mm,41.332mm) from Top Layer to Bottom Layer And Pad J1-3(70.137mm,23.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=432.622mil|Location1.Y=2215.567mil|Location2.Y=2361.362mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=432.622mil|Location1.Y=2215.567mil|Location2.Y=2361.362mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad J1-4(10.137mm,57.127mm) on Multi-Layer And Pad J1-4(10.137mm,59.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=693.291mil|Location1.Y=2023.244mil|Location2.Y=2282.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=693.291mil|Location1.Y=2023.244mil|Location2.Y=2282.622mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Pad J1-4(10.137mm,57.127mm) on Multi-Layer And Via (17mm,52mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2794.827mil|Location1.Y=1034.465mil|Location2.Y=1180.26mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2727.772mil|Location2.X=2794.827mil|Location1.Y=1034.465mil|Location2.Y=1180.26mil|Absolute=True">Un-Routed Net Constraint: Net 5V Between Pad J1-5(70.137mm,27.127mm) on Multi-Layer And Pad J1-5(70.137mm,29.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2244.504mil|Location2.X=2794.827mil|Location1.Y=1113.205mil|Location2.Y=1559.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2244.504mil|Location2.X=2794.827mil|Location1.Y=1113.205mil|Location2.Y=1559.433mil|Absolute=True">Un-Routed Net Constraint: Net 5V Between Via (57.62mm,39mm) from Top Layer to Bottom Layer And Pad J1-5(70.137mm,29.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=432.622mil|Location1.Y=1979.347mil|Location2.Y=2125.142mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=432.622mil|Location1.Y=1979.347mil|Location2.Y=2125.142mil|Absolute=True">Un-Routed Net Constraint: Net 5V Between Pad J1-6(10.137mm,51.127mm) on Multi-Layer And Pad J1-6(10.137mm,53.127mm) on Multi-Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=2292.504mil|Location1.Y=1511.433mil|Location2.Y=2046.402mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=365.567mil|Location2.X=2292.504mil|Location1.Y=1511.433mil|Location2.Y=2046.402mil|Absolute=True">Un-Routed Net Constraint: Net 5V Between Pad J1-6(10.137mm,51.127mm) on Multi-Layer And Via (57.62mm,39mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=645.291mil|Location2.X=964.945mil|Location1.Y=1603.244mil|Location2.Y=2488.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=645.291mil|Location2.X=964.945mil|Location1.Y=1603.244mil|Location2.Y=2488.535mil|Absolute=True">Un-Routed Net Constraint: Net EN Between Via (17mm,41.332mm) from Top Layer to Bottom Layer And Via (23.9mm,62.599mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=645.291mil|Location2.X=1992.504mil|Location1.Y=1511.433mil|Location2.Y=1651.244mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=645.291mil|Location2.X=1992.504mil|Location1.Y=1511.433mil|Location2.Y=1651.244mil|Absolute=True">Un-Routed Net Constraint: Net EN Between Via (17mm,41.332mm) from Top Layer to Bottom Layer And Via (50mm,39mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=645.291mil|Location2.X=1093.291mil|Location1.Y=1603.244mil|Location2.Y=2071.244mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=645.291mil|Location2.X=1093.291mil|Location1.Y=1603.244mil|Location2.Y=2071.244mil|Absolute=True">Un-Routed Net Constraint: Net 3.3V Between Via (17mm,52mm) from Top Layer to Bottom Layer And Via (27.16mm,41.332mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=693.945mil|Location2.X=2092.504mil|Location1.Y=1511.433mil|Location2.Y=2763.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=693.945mil|Location2.X=2092.504mil|Location1.Y=1511.433mil|Location2.Y=2763.535mil|Absolute=True">Un-Routed Net Constraint: Net BAT2 Between Via (18.82mm,69mm) from Top Layer to Bottom Layer And Via (52.54mm,39mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=745.291mil|Location2.X=2504mil|Location1.Y=553.165mil|Location2.Y=1651.244mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=745.291mil|Location2.X=2504mil|Location1.Y=553.165mil|Location2.Y=1651.244mil|Absolute=True">Un-Routed Net Constraint: Net BAT1 Between Via (19.54mm,41.332mm) from Top Layer to Bottom Layer And Via (62.2mm,15.452mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=845.291mil|Location2.X=993.291mil|Location1.Y=1603.244mil|Location2.Y=1651.244mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=845.291mil|Location2.X=993.291mil|Location1.Y=1603.244mil|Location2.Y=1651.244mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Via (22.08mm,41.332mm) from Top Layer to Bottom Layer And Via (24.62mm,41.332mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=945.291mil|Location2.X=2192.504mil|Location1.Y=1511.433mil|Location2.Y=1651.244mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=945.291mil|Location2.X=2192.504mil|Location1.Y=1511.433mil|Location2.Y=1651.244mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Via (24.62mm,41.332mm) from Top Layer to Bottom Layer And Via (55.08mm,39mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1354.268mil|Location2.X=2220.535mil|Location1.Y=553.165mil|Location2.Y=663.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1354.268mil|Location2.X=2220.535mil|Location1.Y=553.165mil|Location2.Y=663.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Via (35.8mm,15.452mm) from Top Layer to Bottom Layer And Via (55mm,15.452mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1637.732mil|Location2.X=2092.504mil|Location1.Y=553.165mil|Location2.Y=1559.433mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1637.732mil|Location2.X=2092.504mil|Location1.Y=553.165mil|Location2.Y=1559.433mil|Absolute=True">Un-Routed Net Constraint: Net BAT2 Between Via (43mm,15.452mm) from Top Layer to Bottom Layer And Via (52.54mm,39mm) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDUOLK43X5NWEYED5YLCKOJI1RCLYVBBAIPHSSJM1KWUZJHCSYY0N"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1357.643mil|Location2.X=1461.255mil|Location1.Y=556.54mil|Location2.Y=660.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1357.643mil|Location2.X=1461.255mil|Location1.Y=556.54mil|Location2.Y=660.153mil|Absolute=True">Hole Size Constraint: (2.6mm &gt; 2.54mm) Via (35.8mm,15.452mm) from Top Layer to Bottom Layer Actual Hole Size = 2.6mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1641.107mil|Location2.X=1744.719mil|Location1.Y=556.54mil|Location2.Y=660.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1641.107mil|Location2.X=1744.719mil|Location1.Y=556.54mil|Location2.Y=660.153mil|Absolute=True">Hole Size Constraint: (2.6mm &gt; 2.54mm) Via (43mm,15.452mm) from Top Layer to Bottom Layer Actual Hole Size = 2.6mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2113.548mil|Location2.X=2217.16mil|Location1.Y=556.54mil|Location2.Y=660.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2113.548mil|Location2.X=2217.16mil|Location1.Y=556.54mil|Location2.Y=660.153mil|Absolute=True">Hole Size Constraint: (2.6mm &gt; 2.54mm) Via (55mm,15.452mm) from Top Layer to Bottom Layer Actual Hole Size = 2.6mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2397.013mil|Location2.X=2500.625mil|Location1.Y=556.54mil|Location2.Y=660.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2397.013mil|Location2.X=2500.625mil|Location1.Y=556.54mil|Location2.Y=660.153mil|Absolute=True">Hole Size Constraint: (2.6mm &gt; 2.54mm) Via (62.2mm,15.452mm) from Top Layer to Bottom Layer Actual Hole Size = 2.6mm</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDCFJGVTTI04YZB5EQB1DKMGU4YLTNXM1EYCULDZFUG0PAVXFDHIAF"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2127.696mil|Location2.X=2138.946mil|Location1.Y=668.632mil|Location2.Y=679.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2127.696mil|Location2.X=2138.946mil|Location1.Y=668.632mil|Location2.Y=679.882mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad J2-0(55mm,15.452mm) on Top Layer And Track (50.85mm,17.377mm)(66.35mm,17.377mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2411.161mil|Location2.X=2422.411mil|Location1.Y=668.632mil|Location2.Y=679.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2411.161mil|Location2.X=2422.411mil|Location1.Y=668.632mil|Location2.Y=679.882mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad J2-1(62.2mm,15.452mm) on Top Layer And Track (50.85mm,17.377mm)(66.35mm,17.377mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1371.791mil|Location2.X=1383.041mil|Location1.Y=668.632mil|Location2.Y=679.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1371.791mil|Location2.X=1383.041mil|Location1.Y=668.632mil|Location2.Y=679.882mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad J3-0(35.8mm,15.452mm) on Top Layer And Track (31.65mm,17.377mm)(47.15mm,17.377mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1655.255mil|Location2.X=1666.505mil|Location1.Y=668.632mil|Location2.Y=679.882mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1655.255mil|Location2.X=1666.505mil|Location1.Y=668.632mil|Location2.Y=679.882mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad J3-1(43mm,15.452mm) on Top Layer And Track (31.65mm,17.377mm)(47.15mm,17.377mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDU5RVTMZUIPRDAYBFDOPFHKB4LLN5DXEX4S1WSDBCT11SNZULEBM"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB'))</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=0.394mil|Location2.X=12375mil|Location1.Y=0mil|Location2.Y=4070mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=0.394mil|Location2.X=12375mil|Location1.Y=0mil|Location2.Y=4070mil|Absolute=True">Room Definition: Between Component J1-StackingConnector (80.137mm,80.127mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=321.029mil|Location2.X=12375mil|Location1.Y=1060mil|Location2.Y=4070mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=321.029mil|Location2.X=12375mil|Location1.Y=1060mil|Location2.Y=4070mil|Absolute=True">Room Definition: Between Component U1-Pololu 24V STEP-UP (64.54mm,61.304mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=614.291mil|Location2.X=12375mil|Location1.Y=1060mil|Location2.Y=4070mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=614.291mil|Location2.X=12375mil|Location1.Y=1060mil|Location2.Y=4070mil|Absolute=True">Room Definition: Between Component U3-Pololu 3.3V STEP-DOWN (15.73mm,40.062mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1996.968mil|Location2.X=12375mil|Location1.Y=0mil|Location2.Y=4070mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1996.968mil|Location2.X=12375mil|Location1.Y=0mil|Location2.Y=4070mil|Absolute=True">Room Definition: Between Edge Component J2-XT60 90deg (62.2mm,15.452mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1241.063mil|Location2.X=12375mil|Location1.Y=0mil|Location2.Y=4070mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1241.063mil|Location2.X=12375mil|Location1.Y=0mil|Location2.Y=4070mil|Absolute=True">Room Definition: Between Edge Component J3-XT60 90deg (43mm,15.452mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1638.504mil|Location2.X=12375mil|Location1.Y=1060mil|Location2.Y=4070mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1638.504mil|Location2.X=12375mil|Location1.Y=1060mil|Location2.Y=4070mil|Absolute=True">Room Definition: Between Edge Component U2-Pololu 5V STEP-DOWN (41.745mm,37.73mm) on Top Layer And Room PDB (Bounding Region = (178.943mm, 26.924mm, 314.325mm, 103.378mm) (InComponentClass('PDB')) </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>
