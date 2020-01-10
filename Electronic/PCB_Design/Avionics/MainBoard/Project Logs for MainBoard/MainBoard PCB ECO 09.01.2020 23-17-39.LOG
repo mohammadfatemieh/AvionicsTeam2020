@@ -1,0 +1,25 @@
+Removed Pin From Net: NetName=GND Pin=J1-1
+Removed Pin From Net: NetName=GND Pin=J1-2
+Removed Pin From Net: NetName=VCC Pin=J1-3
+Removed Pin From Net: NetName=CANL Pin=J1-5
+Removed Pin From Net: NetName=CANL Pin=J1-6
+Removed Pin From Net: NetName=CANH Pin=J1-7
+Removed Pin From Net: NetName=CANH Pin=J1-8
+Added Pin To Net: NetName=GND Pin=J1-1
+Added Pin To Net: NetName=NetJ1_1 Pin=J1-1
+Added Pin To Net: NetName=GND Pin=J1-2
+Added Pin To Net: NetName=SD_CS1 Pin=J1-2
+Added Pin To Net: NetName=SD_MOSI Pin=J1-3
+Added Pin To Net: NetName=VCC Pin=J1-3
+Added Pin To Net: NetName=VCC Pin=J1-4
+Added Pin To Net: NetName=CANL Pin=J1-5
+Added Pin To Net: NetName=SD_SCK Pin=J1-5
+Added Pin To Net: NetName=CANL Pin=J1-6
+Added Pin To Net: NetName=GND Pin=J1-6
+Added Pin To Net: NetName=CANH Pin=J1-7
+Added Pin To Net: NetName=SD_MISO Pin=J1-7
+Added Pin To Net: NetName=CANH Pin=J1-8
+Added Pin To Net: NetName=NetJ1_8 Pin=J1-8
+Added Member To Class: ClassName=MainBoard Member=Component J1 693072010801
+Added Room: Name=MainBoard
+Added Room: Name=U_BasicMicrocontroller
