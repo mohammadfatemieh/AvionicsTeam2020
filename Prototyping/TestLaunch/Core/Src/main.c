@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "fatfs.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -53,7 +54,7 @@ UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-
+extern uint32_t millis;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -71,7 +72,42 @@ static void MX_USART3_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+FATFS fs;  // file system
+FIL fil;  // file
+FRESULT fresult;  // to store the result
+#define BUG_LENGTH 512
+char buffer[512]; // to store data
 
+UINT br, bw;   // file read/write count
+
+/* capacity related variables */
+FATFS *pfs;
+DWORD fre_clust;
+uint32_t total, free_space;
+
+
+/* to send the data to the uart */
+void send_uart (char *string)
+{
+	uint8_t len = strlen (string);
+	HAL_UART_Transmit(&huart1, (uint8_t *) string, len, 2000);  // transmit in blocking mode
+}
+
+/* to find the size of data in the buffer */
+int bufsize (char *buf)
+{
+	int i=0;
+	while (*buf++ != '\0') i++;
+	return i;
+}
+
+void bufclear (void)  // clear buffer
+{
+	for (int i=0; i<BUG_LENGTH; i++)
+	{
+		buffer[i] = '\0';
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -109,12 +145,37 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
+  MX_FATFS_Init();
   /* USER CODE BEGIN 2 */
+
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-  char buffer[80] = {0};
 
   int accelZ=0, accelY=0, accelX=0;
+
+
+  /* Mount SD Card */
+	fresult = f_mount(&fs, "", 0);
+	if (fresult != FR_OK) send_uart ("error in mounting SD CARD...\n");
+	else send_uart("SD CARD mounted successfully...\n");
+
+	/* Check free space */
+  f_getfree("", &fre_clust, &pfs);
+
+  total = (uint32_t)((pfs->n_fatent - 2) * pfs->csize * 0.5);
+  sprintf (buffer, "SD CARD Total Size: \t%lu\n",total);
+  send_uart(buffer);
+  bufclear();
+  free_space = (uint32_t)(fre_clust * pfs->csize * 0.5);
+  sprintf (buffer, "SD CARD Free Space: \t%lu\n",free_space);
+  send_uart(buffer);
+
+
+  /* Open file to write/ create a file if it doesn't exist */
+  fresult = f_open(&fil, "data.csv", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
+  f_puts("TIME,X,Y,Z\n", &fil);
   /* USER CODE END 2 */
+
+  uint8_t sync_counter = 0;
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -140,11 +201,22 @@ int main(void)
 
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
 		// send data over UART1 (TX = A9, RX = A10)
-		snprintf(buffer, sizeof(buffer), "%6.3f %6.3f %6.3f\r\n", ((float)accelX) / 372.0 + 0.250, ((float)accelY) / 372.0 + 0.250, ((float)accelZ) / 372.0);
-		//snprintf(buffer, sizeof(buffer), "%5d %5d %5d\r\n", accelX, accelY, accelZ);
-		HAL_UART_Transmit(&huart1, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
-		HAL_Delay(1);
+		snprintf(buffer, sizeof(buffer), "%lu,%6.3f,%6.3f,%6.3f\n", millis,((float)accelX) / 372.0 + 0.250, ((float)accelY) / 372.0 + 0.250, ((float)accelZ) / 372.0);
+
+		f_puts(buffer, &fil);
+
+		if(sync_counter == 20) {
+			sync_counter = 0;
+			f_sync(&fil);
+		}
+
+		sync_counter++;
+
+		//HAL_UART_Transmit(&huart1, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+		//HAL_Delay(50);
   }
+  /* Close file */
+  f_close(&fil);
   /* USER CODE END 3 */
 }
 
@@ -311,7 +383,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
