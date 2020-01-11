@@ -12,7 +12,7 @@ int value ; //Value from pot
 void setup() {
     //Start the serial communication
     Serial.begin(9600);
-    mySerial.begin(9600); //Baud rate must be the same as is on xBee module
+    mySerial.begin(M9600); //Baud rate must be the same as is on xBee module
 }
 
 char a_word[LENGTH+1] = { (char)0 };

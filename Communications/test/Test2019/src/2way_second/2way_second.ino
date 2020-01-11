@@ -1,4 +1,4 @@
-
+#include <Arduino.h>
 #include <SoftwareSerial.h>
 
 SoftwareSerial mySerial(2, 3); //RX, TX
@@ -21,10 +21,9 @@ void loop() {
 //    Serial.println(input);    
 //  }
 
-if(mySerial.available() > 1){//Read from HC-12 and send to serial monitor
+if(mySerial.available() > 1) {//Read from HC-12 and send to serial monitor
     char input = mySerial.read();
     Serial.print(input);
   }
   delay(20);
-
 }

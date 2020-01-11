@@ -1,18 +1,18 @@
 #define LENGTH 100
 
-const int ledPin = 3; //Led to Arduino pin 3 (PWM)
+const int ledPin = 3;       //Led to Arduino pin 3 (PWM)
 
-bool started= false;//True: Message is strated
-bool ended  = false;//True: Message is finished
-char incomingByte ; //Variable to store the incoming byte
-char msg[LENGTH];    //Message - array from 0 to 2 (3 values - PWM - e.g. 240)
-byte index;     //Index of array
+bool started= false;        //True: Message is strated
+bool ended  = false;        //True: Message is finished
+char incomingByte ;         //Variable to store the incoming byte
+char msg[LENGTH];           //Message - array from 0 to 2 (3 values - PWM - e.g. 240)
+byte index;                 //Index of array
 char letter;
 String cool_word = "";
 
 void setup() {
   //Start the serial communication
-  Serial.begin(9600); //Baud rate must be the same as is on xBee module
+  Serial.begin(9600);        //Baud rate must be the same as is on xBee module
   pinMode(ledPin, OUTPUT);
 }
 
