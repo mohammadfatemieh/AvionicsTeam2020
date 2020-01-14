@@ -1,0 +1,28 @@
+PCAD Importer Log
+Project : BMP388.LibPkg
+
+Section : D:\OneDrive\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\Libraries\BMP388\BMP388.lia
+    Section : PCB Library - BMP388.PcbLib
+        Section : Load Messages
+            Warning - 1 : Skipping Token BMP388 On Line 133
+            Warning - 1 : Skipping Token attachedSymbol On Line 260
+        EndSection
+
+        Section : Import Messages
+        EndSection
+    EndSection
+
+    Section : SCH Library - BMP388.SchLib
+        Section : Parsing Messages
+            Warning - 1 : Skipping Token padStyleDef On Line 9
+            Warning - 1 : Skipping Token multiLayer On Line 84
+            Warning - 1 : Skipping Token layerContents On Line 96
+            Warning - 1 : Skipping Token layerContents On Line 102
+            Warning - 1 : Skipping Token layerContents On Line 111
+            Warning - 1 : Skipping Token layerContents On Line 122
+        EndSection
+
+        Section : Generating SCH Library - BMP388.SchLib
+        EndSection
+    EndSection
+EndSection
