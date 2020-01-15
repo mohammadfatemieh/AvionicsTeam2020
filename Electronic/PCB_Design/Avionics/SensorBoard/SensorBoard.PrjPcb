@@ -224,6 +224,10 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
+[GeneratedDocument1]
+DocumentPath=Project Outputs for SensorBoard\Design Rule Check - PCB1.html
+DItemRevisionGUID=
+
 [DeviceSheetFolder1]
 Path=D:\OneDrive\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\SharedScheets\
 IncludeSubFolders=0
