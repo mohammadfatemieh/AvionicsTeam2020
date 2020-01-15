@@ -69,7 +69,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=a299aefe-710a-438b-aa6f-bfdb65812117
+DocumentUniqueId=c3fdae2d-0198-4ea0-a808-806b3e1e15d4
 
 [Document3]
 DocumentPath=MainBoard\MainBoard.PrjPcb
@@ -206,6 +206,23 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=KXYKMNKA
+
+[Document11]
+DocumentPath=Libraries\Integrated_Library.IntLib
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
 
 [OutputGroup1]
 Name=Netlist Outputs
