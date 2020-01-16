@@ -126,6 +126,10 @@ DocumentUniqueId=
 DocumentPath=Project Outputs for PowerDeliveryBoard\Design Rule Check - PDB.html
 DItemRevisionGUID=
 
+[GeneratedDocument2]
+DocumentPath=Project Outputs for PowerDeliveryBoard\Embedded Boards Stackup Compatibility - two_layer_boards.html
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0

@@ -1,0 +1,15 @@
+Stackup Compatibility
+Filename     : C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\two_layer_boards.PcbDoc
+Date         : 1/15/2020
+Time         : 10:15:57 PM
+Time Elapsed : 00:00:00
+
+ERROR : 2 incompatible layer(s) found in the embedded boards placed in the current PCB panel document.
+
+IO_Board, two_layer_boards, BatteryBoard
+    Top Layer (Signal), Top Layer (Signal), Top Layer (Signal)
+    Int1 (GND) (Signal), --------, --------
+    Int2 (PWR) (Signal), --------, --------
+    Bottom Layer (Signal), Bottom Layer (Signal), Bottom Layer (Signal)
+    Open Layer Stack Manager, Open Layer Stack Manager, Open Layer Stack Manager
+count : 5
