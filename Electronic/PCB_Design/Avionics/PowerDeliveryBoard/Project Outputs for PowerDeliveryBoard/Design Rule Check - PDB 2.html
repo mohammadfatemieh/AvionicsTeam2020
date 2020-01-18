@@ -1,0 +1,551 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 8em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD20\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">1/15/2020</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">11:46:15 AM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc" class="file"><acronym title="C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc">C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">69</td></tr>
+</table>
+</td>
+</table><a name="IDHUM0HGVOI0QZPSFKX2INVFF3IHFAJVWQNNXDKHPP0M251BKUTLJP"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID00BTMUMPIUWYCDTS4F50GDZIQKG0IBK5F3WZJDEKOWNXIUXSS1WP">Clearance Constraint (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">36</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID54BHRRGEJZ1DN0ZFQ012H2XQW21CUQHBXRGRTGFAYN40BRNKWE">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDRLIN1RPDVVQQON4AZR3HCQC2QNWJHGZUAM4P5LGUXXTTL2IN4SEI">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID4AGWL20M2MN3INSSSFJEMCSHBI3UHQBYMKGJGQNATIGTPGRQWQ3E">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID1ARW3LS4GRPZJXKAEBULAR3K4L2FFJTDKIKV3DEMVFZNRPEIXHGC">Width Constraint (Min=0.254mm) (Max=10mm) (Preferred=0.5mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDEYIZA24WBP0GJYVPK1TQUT2JGBLTSXRNQAVEWZKJVSPQYZCLSGLJ">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDYZQSJOOZHZN0L5BZSHNPT1SY3ETVJIVMDHKPPNGOIQ4NA3MEJV4P">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">8</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDI3EDZ45TGHFFLNDHJOUHA0YXJJJCICFYNIGWKSHNPCD4DZNXOU5G">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDWVIE2C3EYIC5IHDGUH5DYTMXKMX3M0OM5G4XQ3OPJCNKSRURV0PJ">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">18</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5Z0XDA5ISMZ5JFCBGT13JYSR3MQMGSBQ4V44WHNKTFFJOTKPGVCE">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDJXJRAHTKD0ODJ4NTRTRTQYOU5FCDLZ4NWIZC4LF24SCWNIDPSXRN">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">3</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDJ4DL34N5EE5XCTNG0SFB1DIMLB5NKIUQ3XEHQZK3UTFDWFZ1IIBP">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDLYHJSRZ3QLJXHRJPOMUTL0WRQC3RSWXJZQUB11PC5X5MLCP3BRPF">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">69</td>
+</tr>
+</table><br><a name="ID00BTMUMPIUWYCDTS4F50GDZIQKG0IBK5F3WZJDEKOWNXIUXSS1WP"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Clearance Constraint (Gap=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2704.611mil|Location2.X=2715.861mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2704.611mil|Location2.X=2715.861mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.25mm &lt; 0.254mm) Between Pad Q1-1(68.51mm,102.065mm) on Top Layer And Pad Q1-2(69.17mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.725mil|Location2.X=2714.975mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.725mil|Location2.X=2714.975mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.205mm &lt; 0.254mm) Between Pad Q1-1(68.51mm,102.065mm) on Top Layer And Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.25mm &lt; 0.254mm) Between Pad Q1-2(69.17mm,102.065mm) on Top Layer And Pad Q1-3(69.83mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2756.58mil|Location2.X=2767.83mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2756.58mil|Location2.X=2767.83mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.25mm &lt; 0.254mm) Between Pad Q1-3(69.83mm,102.065mm) on Top Layer And Pad Q1-4(70.49mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2731.481mil|Location2.X=2742.731mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2731.481mil|Location2.X=2742.731mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.205mm &lt; 0.254mm) Between Pad Q1-3(69.83mm,102.065mm) on Top Layer And Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2755.694mil|Location2.X=2766.944mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2755.694mil|Location2.X=2766.944mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.205mm &lt; 0.254mm) Between Pad Q1-3(69.83mm,102.065mm) on Top Layer And Track (70.49mm,101.335mm)(70.49mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.842mil|Location2.X=2742.092mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.842mil|Location2.X=2742.092mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True">Clearance Constraint: (0.238mm &lt; 0.254mm) Between Pad Q1-5(69.83mm,105.05mm) on Top Layer And Pad Q1-7(68.893mm,104.057mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True">Clearance Constraint: (0.25mm &lt; 0.254mm) Between Pad Q1-5(69.83mm,105.05mm) on Top Layer And Pad Q1-7(69.17mm,105.05mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=4057.17mil|Location2.Y=4068.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=4057.17mil|Location2.Y=4068.42mil|Absolute=True">Clearance Constraint: (0.225mm &lt; 0.254mm) Between Pad Q1-5(70.108mm,104.057mm) on Top Layer And Pad Q1-7(68.893mm,104.057mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.349mil|Location2.X=2741.599mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.349mil|Location2.X=2741.599mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True">Clearance Constraint: (0.238mm &lt; 0.254mm) Between Pad Q1-5(70.108mm,104.057mm) on Top Layer And Pad Q1-7(69.17mm,105.05mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3432.958mil|Location2.X=3444.208mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3432.958mil|Location2.X=3444.208mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.25mm &lt; 0.254mm) Between Pad Q2-1(87.01mm,102.065mm) on Top Layer And Pad Q2-2(87.67mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3432.072mil|Location2.X=3443.322mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3432.072mil|Location2.X=3443.322mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.205mm &lt; 0.254mm) Between Pad Q2-1(87.01mm,102.065mm) on Top Layer And Track (87.67mm,98.743mm)(87.67mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.25mm &lt; 0.254mm) Between Pad Q2-2(87.67mm,102.065mm) on Top Layer And Pad Q2-3(88.33mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.926mil|Location2.X=3496.176mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.926mil|Location2.X=3496.176mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.25mm &lt; 0.254mm) Between Pad Q2-3(88.33mm,102.065mm) on Top Layer And Pad Q2-4(88.99mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.828mil|Location2.X=3471.078mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.828mil|Location2.X=3471.078mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.205mm &lt; 0.254mm) Between Pad Q2-3(88.33mm,102.065mm) on Top Layer And Track (87.67mm,98.743mm)(87.67mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.04mil|Location2.X=3495.29mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.04mil|Location2.X=3495.29mil|Location1.Y=3993.194mil|Location2.Y=4004.444mil|Absolute=True">Clearance Constraint: (0.205mm &lt; 0.254mm) Between Pad Q2-3(88.33mm,102.065mm) on Top Layer And Track (88.99mm,101.368mm)(88.99mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.464mil|Location2.X=3495.714mil|Location1.Y=3991.213mil|Location2.Y=4008.561mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.464mil|Location2.X=3495.714mil|Location1.Y=3991.213mil|Location2.Y=4008.561mil|Absolute=True">Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad Q2-3(88.33mm,102.065mm) on Top Layer And Track (88.99mm,101.368mm)(89.283mm,101.075mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.188mil|Location2.X=3470.438mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.188mil|Location2.X=3470.438mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True">Clearance Constraint: (0.238mm &lt; 0.254mm) Between Pad Q2-5(88.33mm,105.05mm) on Top Layer And Pad Q2-7(87.392mm,104.057mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True">Clearance Constraint: (0.25mm &lt; 0.254mm) Between Pad Q2-5(88.33mm,105.05mm) on Top Layer And Pad Q2-7(87.67mm,105.05mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=4057.17mil|Location2.Y=4068.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=4057.17mil|Location2.Y=4068.42mil|Absolute=True">Clearance Constraint: (0.225mm &lt; 0.254mm) Between Pad Q2-5(88.607mm,104.057mm) on Top Layer And Pad Q2-7(87.392mm,104.057mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.696mil|Location2.X=3469.946mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.696mil|Location2.X=3469.946mil|Location1.Y=4115.241mil|Location2.Y=4126.491mil|Absolute=True">Clearance Constraint: (0.238mm &lt; 0.254mm) Between Pad Q2-5(88.607mm,104.057mm) on Top Layer And Pad Q2-7(87.67mm,105.05mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.528mil|Location2.X=2714.778mil|Location1.Y=3996.061mil|Location2.Y=4007.311mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.528mil|Location2.X=2714.778mil|Location1.Y=3996.061mil|Location2.Y=4007.311mil|Absolute=True">Clearance Constraint: (0.215mm &lt; 0.254mm) Between Track (68.505mm,101.643mm)(68.505mm,102.06mm) on Top Layer And Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.627mil|Location2.X=2714.877mil|Location1.Y=4012.682mil|Location2.Y=4023.932mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.627mil|Location2.X=2714.877mil|Location1.Y=4012.682mil|Location2.Y=4023.932mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (68.505mm,102.06mm)(68.51mm,102.065mm) on Top Layer And Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.528mil|Location2.X=2714.778mil|Location1.Y=3996.061mil|Location2.Y=4007.311mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.528mil|Location2.X=2714.778mil|Location1.Y=3996.061mil|Location2.Y=4007.311mil|Absolute=True">Clearance Constraint: (0.215mm &lt; 0.254mm) Between Track (68.5mm,101.638mm)(68.505mm,101.643mm) on Top Layer And Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.43mil|Location2.X=2714.68mil|Location1.Y=3970.753mil|Location2.Y=3982.003mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.43mil|Location2.X=2714.68mil|Location1.Y=3970.753mil|Location2.Y=3982.003mil|Absolute=True">Clearance Constraint: (0.22mm &lt; 0.254mm) Between Track (68.5mm,101mm)(68.5mm,101.638mm) on Top Layer And Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.43mil|Location2.X=2714.68mil|Location1.Y=3970.753mil|Location2.Y=3982.003mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2703.43mil|Location2.X=2714.68mil|Location1.Y=3970.753mil|Location2.Y=3982.003mil|Absolute=True">Clearance Constraint: (0.22mm &lt; 0.254mm) Between Track (68mm,100.5mm)(68.5mm,101mm) on Top Layer And Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2731.58mil|Location2.X=2742.83mil|Location1.Y=3942.576mil|Location2.Y=3953.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2731.58mil|Location2.X=2742.83mil|Location1.Y=3942.576mil|Location2.Y=3953.826mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer And Track (69.83mm,100.284mm)(69.83mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2731.58mil|Location2.X=2742.83mil|Location1.Y=3942.576mil|Location2.Y=3953.826mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2731.58mil|Location2.X=2742.83mil|Location1.Y=3942.576mil|Location2.Y=3953.826mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (69.17mm,97.955mm)(69.17mm,102.065mm) on Top Layer And Track (69.83mm,100.284mm)(70.5mm,99.614mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2755.595mil|Location2.X=2766.845mil|Location1.Y=3983.942mil|Location2.Y=3995.192mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2755.595mil|Location2.X=2766.845mil|Location1.Y=3983.942mil|Location2.Y=3995.192mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (69.83mm,100.284mm)(69.83mm,102.065mm) on Top Layer And Track (70.49mm,101.335mm)(70.49mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2755.595mil|Location2.X=2766.845mil|Location1.Y=3983.942mil|Location2.Y=3995.192mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2755.595mil|Location2.X=2766.845mil|Location1.Y=3983.942mil|Location2.Y=3995.192mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (69.83mm,100.284mm)(69.83mm,102.065mm) on Top Layer And Track (70.49mm,101.335mm)(70.875mm,100.95mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3431.973mil|Location2.X=3443.223mil|Location1.Y=3982.958mil|Location2.Y=3994.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3431.973mil|Location2.X=3443.223mil|Location1.Y=3982.958mil|Location2.Y=3994.208mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (85.9mm,100.2mm)(87.01mm,101.31mm) on Top Layer And Track (87.67mm,98.743mm)(87.67mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3431.973mil|Location2.X=3443.223mil|Location1.Y=3982.958mil|Location2.Y=3994.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3431.973mil|Location2.X=3443.223mil|Location1.Y=3982.958mil|Location2.Y=3994.208mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (87.01mm,101.31mm)(87.01mm,102.065mm) on Top Layer And Track (87.67mm,98.743mm)(87.67mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.926mil|Location2.X=3471.176mil|Location1.Y=3948.903mil|Location2.Y=3960.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.926mil|Location2.X=3471.176mil|Location1.Y=3948.903mil|Location2.Y=3960.153mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (87.67mm,98.743mm)(87.67mm,102.065mm) on Top Layer And Track (88.33mm,100.445mm)(88.33mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.926mil|Location2.X=3471.176mil|Location1.Y=3948.903mil|Location2.Y=3960.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.926mil|Location2.X=3471.176mil|Location1.Y=3948.903mil|Location2.Y=3960.153mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (87.67mm,98.743mm)(87.67mm,102.065mm) on Top Layer And Track (88.33mm,100.445mm)(89.05mm,99.725mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3483.942mil|Location2.X=3495.192mil|Location1.Y=3985.237mil|Location2.Y=3996.487mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3483.942mil|Location2.X=3495.192mil|Location1.Y=3985.237mil|Location2.Y=3996.487mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (88.33mm,100.445mm)(88.33mm,102.065mm) on Top Layer And Track (88.99mm,101.368mm)(88.99mm,102.065mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3483.942mil|Location2.X=3495.192mil|Location1.Y=3985.237mil|Location2.Y=3996.487mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3483.942mil|Location2.X=3495.192mil|Location1.Y=3985.237mil|Location2.Y=3996.487mil|Absolute=True">Clearance Constraint: (0.21mm &lt; 0.254mm) Between Track (88.33mm,100.445mm)(88.33mm,102.065mm) on Top Layer And Track (88.99mm,101.368mm)(89.283mm,101.075mm) on Top Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDYZQSJOOZHZN0L5BZSHNPT1SY3ETVJIVMDHKPPNGOIQ4NA3MEJV4P"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4643.076mil|Location2.X=4805.743mil|Location1.Y=4249.375mil|Location2.Y=4412.042mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4643.076mil|Location2.X=4805.743mil|Location1.Y=4249.375mil|Location2.Y=4412.042mil|Absolute=True">Hole Size Constraint: (4.1mm &gt; 2.54mm) Pad Free-2(120mm,110mm) on Multi-Layer Actual Hole Size = 4.1mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4643.076mil|Location2.X=4805.743mil|Location1.Y=1572.21mil|Location2.Y=1734.877mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4643.076mil|Location2.X=4805.743mil|Location1.Y=1572.21mil|Location2.Y=1734.877mil|Absolute=True">Hole Size Constraint: (4.1mm &gt; 2.54mm) Pad Free-2(120mm,42mm) on Multi-Layer Actual Hole Size = 4.1mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1965.91mil|Location2.X=2128.578mil|Location1.Y=4249.375mil|Location2.Y=4412.042mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1965.91mil|Location2.X=2128.578mil|Location1.Y=4249.375mil|Location2.Y=4412.042mil|Absolute=True">Hole Size Constraint: (4.1mm &gt; 2.54mm) Pad Free-2(52mm,110mm) on Multi-Layer Actual Hole Size = 4.1mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1965.91mil|Location2.X=2128.578mil|Location1.Y=1572.21mil|Location2.Y=1734.877mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1965.91mil|Location2.X=2128.578mil|Location1.Y=1572.21mil|Location2.Y=1734.877mil|Absolute=True">Hole Size Constraint: (4.1mm &gt; 2.54mm) Pad Free-2(52mm,42mm) on Multi-Layer Actual Hole Size = 4.1mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3255.28mil|Location2.X=3358.893mil|Location1.Y=1700.162mil|Location2.Y=1803.775mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3255.28mil|Location2.X=3358.893mil|Location1.Y=1700.162mil|Location2.Y=1803.775mil|Absolute=True">Hole Size Constraint: (2.6mm &gt; 2.54mm) Pad P1-1(84mm,44.5mm) on Multi-Layer Actual Hole Size = 2.6mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2971.816mil|Location2.X=3075.428mil|Location1.Y=1700.162mil|Location2.Y=1803.775mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2971.816mil|Location2.X=3075.428mil|Location1.Y=1700.162mil|Location2.Y=1803.775mil|Absolute=True">Hole Size Constraint: (2.6mm &gt; 2.54mm) Pad P1-2(76.8mm,44.5mm) on Multi-Layer Actual Hole Size = 2.6mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4050.556mil|Location2.X=4154.168mil|Location1.Y=1700.162mil|Location2.Y=1803.775mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4050.556mil|Location2.X=4154.168mil|Location1.Y=1700.162mil|Location2.Y=1803.775mil|Absolute=True">Hole Size Constraint: (2.6mm &gt; 2.54mm) Pad P2-1(104.2mm,44.5mm) on Multi-Layer Actual Hole Size = 2.6mm</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3767.091mil|Location2.X=3870.704mil|Location1.Y=1700.162mil|Location2.Y=1803.775mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3767.091mil|Location2.X=3870.704mil|Location1.Y=1700.162mil|Location2.Y=1803.775mil|Absolute=True">Hole Size Constraint: (2.6mm &gt; 2.54mm) Pad P2-2(97mm,44.5mm) on Multi-Layer Actual Hole Size = 2.6mm</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDWVIE2C3EYIC5IHDGUH5DYTMXKMX3M0OM5G4XQ3OPJCNKSRURV0PJ"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2704.611mil|Location2.X=2715.861mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2704.611mil|Location2.X=2715.861mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q1-1(68.51mm,102.065mm) on Top Layer And Pad Q1-2(69.17mm,102.065mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q1-2(69.17mm,102.065mm) on Top Layer And Pad Q1-3(69.83mm,102.065mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2756.58mil|Location2.X=2767.83mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2756.58mil|Location2.X=2767.83mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q1-3(69.83mm,102.065mm) on Top Layer And Pad Q1-4(70.49mm,102.065mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2756.58mil|Location2.X=2767.83mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2756.58mil|Location2.X=2767.83mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q1-5(69.83mm,105.05mm) on Top Layer And Pad Q1-5(70.49mm,105.05mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.842mil|Location2.X=2742.092mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.842mil|Location2.X=2742.092mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.034mm &lt; 0.254mm) Between Pad Q1-5(69.83mm,105.05mm) on Top Layer And Pad Q1-7(68.893mm,104.057mm) on Top Layer [Top Solder] Mask Sliver [0.034mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q1-5(69.83mm,105.05mm) on Top Layer And Pad Q1-7(69.17mm,105.05mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=4053.17mil|Location2.Y=4064.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.595mil|Location2.X=2741.845mil|Location1.Y=4053.17mil|Location2.Y=4064.42mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.022mm &lt; 0.254mm) Between Pad Q1-5(70.108mm,104.057mm) on Top Layer And Pad Q1-7(68.893mm,104.057mm) on Top Layer [Top Solder] Mask Sliver [0.022mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.349mil|Location2.X=2741.599mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2730.349mil|Location2.X=2741.599mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.034mm &lt; 0.254mm) Between Pad Q1-5(70.108mm,104.057mm) on Top Layer And Pad Q1-7(69.17mm,105.05mm) on Top Layer [Top Solder] Mask Sliver [0.034mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2704.611mil|Location2.X=2715.861mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2704.611mil|Location2.X=2715.861mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q1-7(68.51mm,105.05mm) on Top Layer And Pad Q1-7(69.17mm,105.05mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3432.958mil|Location2.X=3444.208mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3432.958mil|Location2.X=3444.208mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q2-1(87.01mm,102.065mm) on Top Layer And Pad Q2-2(87.67mm,102.065mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q2-2(87.67mm,102.065mm) on Top Layer And Pad Q2-3(88.33mm,102.065mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.926mil|Location2.X=3496.176mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.926mil|Location2.X=3496.176mil|Location1.Y=3989.194mil|Location2.Y=4000.444mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q2-3(88.33mm,102.065mm) on Top Layer And Pad Q2-4(88.99mm,102.065mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.926mil|Location2.X=3496.176mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3484.926mil|Location2.X=3496.176mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q2-5(88.33mm,105.05mm) on Top Layer And Pad Q2-5(88.99mm,105.05mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.188mil|Location2.X=3470.438mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3459.188mil|Location2.X=3470.438mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.034mm &lt; 0.254mm) Between Pad Q2-5(88.33mm,105.05mm) on Top Layer And Pad Q2-7(87.392mm,104.057mm) on Top Layer [Top Solder] Mask Sliver [0.034mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q2-5(88.33mm,105.05mm) on Top Layer And Pad Q2-7(87.67mm,105.05mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=4053.17mil|Location2.Y=4064.42mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.942mil|Location2.X=3470.192mil|Location1.Y=4053.17mil|Location2.Y=4064.42mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.022mm &lt; 0.254mm) Between Pad Q2-5(88.607mm,104.057mm) on Top Layer And Pad Q2-7(87.392mm,104.057mm) on Top Layer [Top Solder] Mask Sliver [0.022mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.696mil|Location2.X=3469.946mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3458.696mil|Location2.X=3469.946mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.034mm &lt; 0.254mm) Between Pad Q2-5(88.607mm,104.057mm) on Top Layer And Pad Q2-7(87.67mm,105.05mm) on Top Layer [Top Solder] Mask Sliver [0.034mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3432.958mil|Location2.X=3444.208mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3432.958mil|Location2.X=3444.208mil|Location1.Y=4111.241mil|Location2.Y=4122.491mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad Q2-7(87.01mm,105.05mm) on Top Layer And Pad Q2-7(87.67mm,105.05mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID5Z0XDA5ISMZ5JFCBGT13JYSR3MQMGSBQ4V44WHNKTFFJOTKPGVCE"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3269.429mil|Location2.X=3280.679mil|Location1.Y=1812.254mil|Location2.Y=1823.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3269.429mil|Location2.X=3280.679mil|Location1.Y=1812.254mil|Location2.Y=1823.504mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad P1-1(84mm,44.5mm) on Multi-Layer And Track (72.65mm,46.425mm)(88.15mm,46.425mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2985.964mil|Location2.X=2997.214mil|Location1.Y=1812.254mil|Location2.Y=1823.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2985.964mil|Location2.X=2997.214mil|Location1.Y=1812.254mil|Location2.Y=1823.504mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad P1-2(76.8mm,44.5mm) on Multi-Layer And Track (72.65mm,46.425mm)(88.15mm,46.425mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4064.704mil|Location2.X=4075.954mil|Location1.Y=1812.254mil|Location2.Y=1823.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4064.704mil|Location2.X=4075.954mil|Location1.Y=1812.254mil|Location2.Y=1823.504mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad P2-1(104.2mm,44.5mm) on Multi-Layer And Track (92.85mm,46.425mm)(108.35mm,46.425mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.24mil|Location2.X=3792.49mil|Location1.Y=1812.254mil|Location2.Y=1823.504mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3781.24mil|Location2.X=3792.49mil|Location1.Y=1812.254mil|Location2.Y=1823.504mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad P2-2(97mm,44.5mm) on Multi-Layer And Track (92.85mm,46.425mm)(108.35mm,46.425mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDJXJRAHTKD0ODJ4NTRTRTQYOU5FCDLZ4NWIZC4LF24SCWNIDPSXRN"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk to Silk (Clearance=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3987.499mil|Location2.X=3995.166mil|Location1.Y=1825.868mil|Location2.Y=1833.534mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3987.499mil|Location2.X=3995.166mil|Location1.Y=1825.868mil|Location2.Y=1833.534mil|Absolute=True">Silk To Silk Clearance Constraint: (Collision &lt; 0.254mm) Between Text "2.9-24V" (100.872mm,52.11mm) on Top Overlay And Track (92.85mm,46.425mm)(108.35mm,46.425mm) on Top Overlay Silk Text to Silk Clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.753mil|Location2.X=2585.003mil|Location1.Y=2852.178mil|Location2.Y=2863.428mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.753mil|Location2.X=2585.003mil|Location1.Y=2852.178mil|Location2.Y=2863.428mil|Absolute=True">Silk To Silk Clearance Constraint: (0.147mm &lt; 0.254mm) Between Text "U2" (63.067mm,70.945mm) on Top Overlay And Track (65.658mm,72.73mm)(65.658mm,90.51mm) on Top Overlay Silk Text to Silk Clearance [0.147mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.753mil|Location2.X=2585.003mil|Location1.Y=2852.178mil|Location2.Y=2863.428mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\Inge\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\PowerDeliveryBoard\PDB.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2573.753mil|Location2.X=2585.003mil|Location1.Y=2852.178mil|Location2.Y=2863.428mil|Absolute=True">Silk To Silk Clearance Constraint: (0.147mm &lt; 0.254mm) Between Text "U2" (63.067mm,70.945mm) on Top Overlay And Track (65.658mm,72.73mm)(83.438mm,72.73mm) on Top Overlay Silk Text to Silk Clearance [0.147mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

@@ -1,0 +1,38 @@
+PCAD Importer Log
+Project : AI-3035-TWT-3V-R.LibPkg
+
+Section : D:\OneDrive\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\Libraries\AI-3035-TWT-3V-R\AI-3035-TWT-3V-R.lia
+    Section : PCB Library - AI-3035-TWT-3V-R.PcbLib
+        Section : Load Messages
+            Warning - 1 : Skipping Token BUZZER On Line 182
+            Warning - 1 : Skipping Token attachedSymbol On Line 244
+            Warning - 1 : Skipping Token 2 On Line 247
+            Warning - 1 : Skipping Token 3 On Line 249
+        EndSection
+
+        Section : Import Messages
+            Warning - 0 : PCAD Pattern Graphics [*BUZZER-30MM_V_PTH][Primary] associated with PCAD Component [AI-3035-TWT-3V-R] has been renamed to PCB FootPrint [*BUZZER-30MM_V_PTH_AI-3035-TWT-3V-R(Primary)].
+            Warning : Default polygonal pad shape for signal layers has been made multilayer
+            Warning : Default polygonal pad shape for signal layers has been made multilayer
+        EndSection
+    EndSection
+
+    Section : SCH Library - AI-3035-TWT-3V-R.SchLib
+        Section : Parsing Messages
+            Warning - 1 : Skipping Token padStyleDef On Line 9
+            Warning - 1 : Skipping Token padStyleDef On Line 21
+            Warning - 1 : Skipping Token multiLayer On Line 146
+            Warning - 1 : Skipping Token layerContents On Line 150
+            Warning - 1 : Skipping Token layerContents On Line 154
+            Warning - 1 : Skipping Token layerContents On Line 161
+            Warning - 1 : Skipping Token multiLayer On Line 172
+            Warning - 1 : Skipping Token layerContents On Line 176
+            Warning - 1 : Skipping Token 2 On Line 247
+            Warning - 1 : Skipping Token 3 On Line 249
+        EndSection
+
+        Section : Generating SCH Library - AI-3035-TWT-3V-R.SchLib
+            Warning - 0 : PCAD Pattern Graphics [*BUZZER-30MM_V_PTH][Primary] associated with PCAD Component [AI-3035-TWT-3V-R] has been renamed to PCB FootPrint [*BUZZER-30MM_V_PTH_AI-3035-TWT-3V-R(Primary)].
+        EndSection
+    EndSection
+EndSection

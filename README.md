@@ -33,6 +33,11 @@ This project will involve several microcontrollers where one of them will be wri
     - test
     - vscode
     - main.c
+  - **Communications** - Subfolder
+    - inc
+    - src
+    - test
+    - vscode
 
 
 ![Folders](Images/folder_structure) 

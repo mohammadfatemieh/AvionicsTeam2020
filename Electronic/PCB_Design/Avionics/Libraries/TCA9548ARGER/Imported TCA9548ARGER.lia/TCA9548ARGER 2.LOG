@@ -1,0 +1,30 @@
+PCAD Importer Log
+Project : TCA9548ARGER.LibPkg
+
+Section : D:\OneDrive\Documents\GitHub\AvionicsTeam2020\Electronic\PCB_Design\Avionics\Libraries\TCA9548ARGER\TCA9548ARGER.lia
+    Section : PCB Library - TCA9548ARGER.PcbLib
+        Section : Load Messages
+            Warning - 1 : Skipping Token TCA9548ARGER On Line 186
+            Warning - 1 : Skipping Token attachedSymbol On Line 463
+        EndSection
+
+        Section : Import Messages
+        EndSection
+    EndSection
+
+    Section : SCH Library - TCA9548ARGER.SchLib
+        Section : Parsing Messages
+            Warning - 1 : Skipping Token padStyleDef On Line 9
+            Warning - 1 : Skipping Token padStyleDef On Line 21
+            Warning - 1 : Skipping Token multiLayer On Line 96
+            Warning - 1 : Skipping Token layerContents On Line 123
+            Warning - 1 : Skipping Token layerContents On Line 129
+            Warning - 1 : Skipping Token layerContents On Line 155
+            Warning - 1 : Skipping Token layerContents On Line 164
+            Warning - 1 : Skipping Token layerContents On Line 175
+        EndSection
+
+        Section : Generating SCH Library - TCA9548ARGER.SchLib
+        EndSection
+    EndSection
+EndSection

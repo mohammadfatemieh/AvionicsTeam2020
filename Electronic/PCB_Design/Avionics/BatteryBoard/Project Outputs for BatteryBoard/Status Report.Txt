@@ -1,0 +1,28 @@
+Source PCB Design All_PCBs.PcbDoc contains embedded board array. It is recomended to generate individual BOM for each embedded board PCB design.
+
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of Project [BatteryBoard.PrjPcb]
+   Generated File[All_PCBs.GTO]
+   Generated File[All_PCBs.GTP]
+   Generated File[All_PCBs.GTS]
+   Generated File[All_PCBs.GTL]
+   Generated File[All_PCBs.GBL]
+   Generated File[All_PCBs.GBS]
+   Generated File[All_PCBs.GBP]
+   Generated File[All_PCBs.GBO]
+   Generated File[All_PCBs.GM1]
+   Generated File[All_PCBs.GM2]
+   Generated File[All_PCBs.GM4]
+   Generated File[All_PCBs.GKO]
+   Generated File[All_PCBs.GPT]
+   Generated File[All_PCBs.GPB]
+   Generated File[All_PCBs.RUL]
+   Generated File[All_PCBs.EXTREP]
+   Generated File[All_PCBs.REP]
+
+
+Files Generated   : 17
+Documents Printed : 0
+
+Finished Output Generation At 9:45:58 AM On 1/16/2020

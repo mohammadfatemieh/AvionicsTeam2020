@@ -1,0 +1,55 @@
+Removed Pin From Net: NetName=VCC Pin=C13-1
+Removed Pin From Net: NetName=GND Pin=C13-2
+Removed Pin From Net: NetName=VCC Pin=C15-1
+Removed Pin From Net: NetName=GND Pin=C15-2
+Change Component Footprint: Designator=C13 Old Footprint=CAPC1609X100X15NL20 New Footprint=6-0805_N
+Change Component Footprint: Designator=C15 Old Footprint=CAPC1609X100X15NL20 New Footprint=6-0805_N
+Change Component Footprint: Designator=C12 Old Footprint=SAMS-C0603-2_M New Footprint=6-0805_N
+Change Component Footprint: Designator=C14 Old Footprint=SAMS-C0603-2_M New Footprint=6-0805_N
+Change Component Comment : Designator=C13 Old Comment=1 µF New Comment=Cap
+Change Component Comment : Designator=C15 Old Comment=1 µF New Comment=Cap
+Change Component Comment : Designator=C12 Old Comment=100 nF New Comment=Cap
+Change Component Comment : Designator=C14 Old Comment=100 nF New Comment=Cap
+Change Managed Component Library Link : Designator=C12 Old VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 New VaultGUID= Old ItemGUID=570724B8-1C91-4768-B5E9-A392923E3526 New ItemGUID= Old RevisionGUID=67F167DC-1A6A-4520-94D0-EB2927BBADE5 New RevisionGUID=
+Change Managed Component Library Link : Designator=C13 Old VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 New VaultGUID= Old ItemGUID=DE847C24-C0D9-49BB-9339-1E706DEA3D8E New ItemGUID= Old RevisionGUID=3E07E840-C32F-4530-A897-3E4F0940B663 New RevisionGUID=
+Change Managed Component Library Link : Designator=C14 Old VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 New VaultGUID= Old ItemGUID=570724B8-1C91-4768-B5E9-A392923E3526 New ItemGUID= Old RevisionGUID=67F167DC-1A6A-4520-94D0-EB2927BBADE5 New RevisionGUID=
+Change Managed Component Library Link : Designator=C15 Old VaultGUID=B7D15EC3-160A-466F-A46C-7801FE6295A7 New VaultGUID= Old ItemGUID=DE847C24-C0D9-49BB-9339-1E706DEA3D8E New ItemGUID= Old RevisionGUID=3E07E840-C32F-4530-A897-3E4F0940B663 New RevisionGUID=
+Change component parameters: Designator = "C13" ("C13"); Footprint = "CAPC1609X100X15NL20"; UniqueID = "\KPKXHXMH" ("\KPKXHXMH")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "RAD-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "1uF"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C15" ("C15"); Footprint = "CAPC1609X100X15NL20"; UniqueID = "\GFYOQWTI" ("\GFYOQWTI")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "RAD-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "1uF"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C12" ("C12"); Footprint = "SAMS-C0603-2_M"; UniqueID = "\EHXEHUNF" ("\EHXEHUNF")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "RAD-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C14" ("C14"); Footprint = "SAMS-C0603-2_M"; UniqueID = "\SJZMDEMO" ("\SJZMDEMO")
+Change component parameters (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "Radial Cap, Thru-Hole; 2 Leads; 0.3 in Pin Spacing"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "RAD-0.3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C13-1
+Added Pin To Net: NetName=VCC Pin=C13-2
+Added Pin To Net: NetName=GND Pin=C15-1
+Added Pin To Net: NetName=VCC Pin=C15-2
+Added Member To Class: ClassName=MainBoard Member=Component J1 693072010801
+Added Room: Name=MainBoard
+Added Room: Name=U_BasicMicrocontroller
