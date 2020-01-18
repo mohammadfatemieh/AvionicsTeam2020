@@ -1,5 +1,5 @@
 #include <SoftwareSerial.h>
-#define LENGTH 100
+#define LENGTH 10
 
 SoftwareSerial xbee_Serial(2, 3); //RX, TX
 
