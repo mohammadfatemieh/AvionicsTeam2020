@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <Adafruit_GPS.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,6 +92,22 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  Adafruit_GPS *gps = Adafruit_GPS::getInstance();
+
+  // set baud rate of GPS module to 115200
+  gps->sendCommand(PMTK_SET_BAUD_115200);
+  // set baud rate of uC to 57600
+  HAL_UART_DeInit(&huart3);
+  huart3.Init.BaudRate = 115200;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+		Error_Handler();
+
+  // turn on RMC (recommended minimum) and GGA (fix data) including altitude
+  gps->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+  // Set the update rate
+  gps->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // 1 Hz update rate
+  // Request updates on antenna status, comment out to keep quiet
+  gps->sendCommand(PGCMD_ANTENNA);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -100,6 +116,14 @@ int main(void)
   {
   	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
   	HAL_Delay(100);
+
+  	if (gps->newNMEAreceived()) {
+  		gps->parse(gps->lastNMEA());
+  	}
+
+  	if (gps->fix) {
+
+  	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -160,7 +184,7 @@ static void MX_USART3_UART_Init(void)
 
   /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
-  huart3.Init.BaudRate = 115200;
+  huart3.Init.BaudRate = 9600;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
   huart3.Init.StopBits = UART_STOPBITS_1;
   huart3.Init.Parity = UART_PARITY_NONE;

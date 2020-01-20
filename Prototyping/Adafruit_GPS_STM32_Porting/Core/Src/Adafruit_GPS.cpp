@@ -29,8 +29,23 @@
 /**************************************************************************/
 
 #include <Adafruit_GPS.h>
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <Arduino.h>
 
 static bool strStartsWith(const char *str, const char *prefix);
+
+
+Adafruit_GPS *Adafruit_GPS::instance = nullptr;
+
+Adafruit_GPS *Adafruit_GPS::getInstance() {
+	if(instance == nullptr)
+		instance = new Adafruit_GPS();
+
+	return instance;
+}
 
 /**************************************************************************/
 /*!
@@ -405,8 +420,6 @@ void Adafruit_GPS::parseTime(char *p) {
 */
 /**************************************************************************/
 void Adafruit_GPS::parseLat(char *p) {
-  int32_t degree;
-  long minutes;
   char degreebuff[10];
   if (!isEmpty(p)) {
     strncpy(degreebuff, p, 2);
@@ -550,22 +563,46 @@ float Adafruit_GPS::secondsSinceDate() { return (millis() - lastDate) / 1000.; }
     @return Bytes available, 0 if none
 */
 /**************************************************************************/
-size_t Adafruit_GPS::available(void) {
+/*size_t Adafruit_GPS::available(void) {
   if (paused)
     return 0;
 
-  return UART_WaitOnFlagUntilTimeout(gpsHwSerial, UART_FLAG_RXNE, RESET, 0, 0) == HAL_OK;
-
   return 0;
+}*/
+
+
+void Adafruit_GPS::HAL_UART_RxLineCpltCallback() {
+
+	// Add \0 to end of line
+	int pos;
+	for(pos = 0; pos < MAXLINELENGTH - 1; ++pos) {
+		if(currentline[pos] == '\n')
+			break;
+	}
+	currentline[pos + 1] = '\0';
+
+  if (currentline == line1) {
+    currentline = line2;
+    lastline = line1;
+  } else {
+    currentline = line1;
+    lastline = line2;
+  }
+
+  recvdflag = true;
+  recvdTime = millis(); // time we got the end of the string
+  sentTime = millis();
+
+  // Receive next line
+	HAL_UART_Receive_IT(gpsHwSerial, (uint8_t*) currentline, MAXLINELENGTH);
 }
 
 /**************************************************************************/
 /*!
-    @brief Read one character from the GPS device
-    @return The character that we received, or 0 if nothing was available
+    @brief This is done by the UART HAL driver. It calles the line complete callback when a line was received
 */
 /**************************************************************************/
-char Adafruit_GPS::read(void) {
+/*char Adafruit_GPS::read(void) {
   static uint32_t firstChar = 0; // first character received in current sentence
   uint32_t tStart = millis();    // as close as we can get to time char was sent
   char c = 0;
@@ -610,7 +647,7 @@ char Adafruit_GPS::read(void) {
   if (firstChar == 0)
     firstChar = tStart;
   return c;
-}
+}*/
 
 
 /**************************************************************************/
@@ -619,9 +656,8 @@ char Adafruit_GPS::read(void) {
     @param ser Pointer to a HardwareSerial object
 */
 /**************************************************************************/
-Adafruit_GPS::Adafruit_GPS(HardwareSerial *ser) {
-  common_init();     // Set everything to common state, then...
-  gpsHwSerial = ser; // ...override gpsHwSerial with value passed.
+Adafruit_GPS::Adafruit_GPS() {
+  common_init();     		// Set everything to common state, then...
 }
 
 
@@ -634,17 +670,14 @@ void Adafruit_GPS::common_init(void) {
   gpsHwSerial = NULL; // port pointer in corresponding constructor
   recvdflag = false;
   paused = false;
-  lineidx = 0;
   currentline = line1;
   lastline = line2;
 
-  hour = minute = seconds = year = month = day = fixquality = fixquality_3d =
-      satellites = 0;  // uint8_t
+  hour = minute = seconds = year = month = day = fixquality = fixquality_3d = satellites = 0;  // uint8_t
   lat = lon = mag = 0; // char
   fix = false;         // bool
   milliseconds = 0;    // uint16_t
-  latitude = longitude = geoidheight = altitude = speed = angle = magvariation =
-      HDOP = VDOP = PDOP = 0.0; // float
+  latitude = longitude = geoidheight = altitude = speed = angle = magvariation = HDOP = VDOP = PDOP = 0.0; // float
 }
 
 /**************************************************************************/
@@ -654,13 +687,20 @@ void Adafruit_GPS::common_init(void) {
     @returns True on successful hardware init, False on failure
 */
 /**************************************************************************/
-bool Adafruit_GPS::begin(uint32_t baud_or_i2caddr) {
+bool Adafruit_GPS::begin(UART_HandleTypeDef *huart) {
 
-  if (gpsHwSerial) {
-    gpsHwSerial->begin(baud_or_i2caddr);
-  }
+	gpsHwSerial = huart;
+	gpsHwSerial->ReceiveUntilNewLine = 1;
 
-  delay(10);
+	HAL_UART_RegisterCallback(gpsHwSerial, HAL_UART_RX_LINE_COMPLETE_CB_ID, Adafruit_GPS::HAL_UART_RxLineCpltCallback_static);
+	HAL_UART_RegisterCallback(gpsHwSerial, HAL_UART_RX_COMPLETE_CB_ID, Adafruit_GPS::HAL_UART_RxLineCpltCallback_static);
+
+	// From know on the UART automatically receives and if a newline is received
+	// HAL_UART_RxLineCpltCallback() is called
+	HAL_UART_Receive_IT(gpsHwSerial, (uint8_t*) currentline, MAXLINELENGTH);
+
+  HAL_Delay(10);
+
   return true;
 }
 
@@ -804,7 +844,7 @@ bool Adafruit_GPS::LOCUS_ReadStatus(void) {
     while ((response[0] != ',') && (response[0] != '*') && (response[0] != 0)) {
       parsed[i] *= 10;
       char c = response[0];
-      if (isDigit(c))
+      if (isdigit(c))
         parsed[i] += c - '0';
       else
         parsed[i] = c;
@@ -813,7 +853,7 @@ bool Adafruit_GPS::LOCUS_ReadStatus(void) {
   }
   LOCUS_serial = parsed[0];
   LOCUS_type = parsed[1];
-  if (isAlpha(parsed[2])) {
+  if (isalpha(parsed[2])) {
     parsed[2] = parsed[2] - 'a' + 10;
   }
   LOCUS_mode = parsed[2];
@@ -878,6 +918,12 @@ static bool strStartsWith(const char *str, const char *prefix) {
   }
   return true;
 }
+
+
+void Adafruit_GPS::HAL_UART_RxLineCpltCallback_static(UART_HandleTypeDef *huart) {
+	Adafruit_GPS::getInstance()->HAL_UART_RxLineCpltCallback();
+}
+
 
 #ifdef NMEA_EXTENSIONS
 /**************************************************************************/

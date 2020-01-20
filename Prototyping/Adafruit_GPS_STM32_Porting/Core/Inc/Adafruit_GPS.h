@@ -145,11 +145,11 @@ typedef enum {
 /*!
     @brief  The GPS class
 */
-class Adafruit_GPS : public Print {
+class Adafruit_GPS {
 public:
-  bool begin(uint32_t baud_or_i2caddr);
+	static Adafruit_GPS *getInstance();
 
-  Adafruit_GPS(UART_HandleTypeDef *ser); // Constructor when using HardwareSerial
+	bool begin(UART_HandleTypeDef *huart);
 
   char *lastNMEA(void);
   bool newNMEAreceived();
@@ -174,6 +174,9 @@ public:
 
   bool wakeup(void);
   bool standby(void);
+
+  void HAL_UART_RxLineCpltCallback();
+  static void HAL_UART_RxLineCpltCallback_static(UART_HandleTypeDef *huart);
 
   int thisCheck = 0; ///< the results of the check on the current sentence
   char thisSource[NMEA_MAX_SOURCE_ID] = {
@@ -259,6 +262,9 @@ public:
 #endif                   // NMEA_EXTENSIONS
 
 private:
+  Adafruit_GPS();
+  static Adafruit_GPS *instance;
+
   const char *tokenOnList(char *token, const char **list);
   char *parseStr(char *buff, char *p, int n);
   bool isEmpty(char *pStart);
@@ -278,14 +284,12 @@ private:
 
   // Make all of these times far in the past by setting them near the middle of
   // the millis() range. Timing assumes that sentences are parsed promptly.
-  uint32_t lastUpdate =
-      2000000000L; ///< millis() when last full sentence successfully parsed
-  uint32_t lastFix = 2000000000L;  ///< millis() when last fix received
-  uint32_t lastTime = 2000000000L; ///< millis() when last time received
-  uint32_t lastDate = 2000000000L; ///< millis() when last date received
-  uint32_t recvdTime =
-      2000000000L; ///< millis() when last full sentence received
-  uint32_t sentTime = 2000000000L; ///< millis() when first character of last
+  uint32_t lastUpdate = 2000000000L; ///< millis() when last full sentence successfully parsed
+  uint32_t lastFix    = 2000000000L;  ///< millis() when last fix received
+  uint32_t lastTime   = 2000000000L; ///< millis() when last time received
+  uint32_t lastDate   = 2000000000L; ///< millis() when last date received
+  uint32_t recvdTime  = 2000000000L; ///< millis() when last full sentence received
+  uint32_t sentTime   = 2000000000L; ///< millis() when first character of last
                                    ///< full sentence received
   bool paused;
 
@@ -298,7 +302,6 @@ private:
   volatile char line1[MAXLINELENGTH]; ///< We double buffer: read one line in
                                       ///< and leave one for the main program
   volatile char line2[MAXLINELENGTH]; ///< Second buffer
-  volatile uint8_t lineidx = 0;   ///< our index into filling the current line
   volatile char *currentline;     ///< Pointer to current line buffer
   volatile char *lastline;        ///< Pointer to previous line buffer
   volatile bool recvdflag;     ///< Received flag

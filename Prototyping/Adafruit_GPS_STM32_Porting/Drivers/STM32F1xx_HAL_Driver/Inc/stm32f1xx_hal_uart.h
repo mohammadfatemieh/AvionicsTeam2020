@@ -25,6 +25,7 @@
 extern "C" {
 #endif
 
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal_def.h"
 
@@ -171,6 +172,9 @@ typedef struct __UART_HandleTypeDef
 
   __IO uint32_t                 ErrorCode;        /*!< UART Error code                    */
 
+
+  uint8_t												ReceiveUntilNewLine;  /*!< Stop RX IT on \n               */
+
 #if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
   void (* TxHalfCpltCallback)(struct __UART_HandleTypeDef *huart);        /*!< UART Tx Half Complete Callback        */
   void (* TxCpltCallback)(struct __UART_HandleTypeDef *huart);            /*!< UART Tx Complete Callback             */
@@ -184,6 +188,8 @@ typedef struct __UART_HandleTypeDef
 
   void (* MspInitCallback)(struct __UART_HandleTypeDef *huart);           /*!< UART Msp Init callback                */
   void (* MspDeInitCallback)(struct __UART_HandleTypeDef *huart);         /*!< UART Msp DeInit callback              */
+
+  void (* RxLineCpltCallback)(struct __UART_HandleTypeDef *huart);        /*!< UART Rx Line Complete Callback        */
 #endif  /* USE_HAL_UART_REGISTER_CALLBACKS */
 
 } UART_HandleTypeDef;
@@ -205,7 +211,9 @@ typedef enum
   HAL_UART_WAKEUP_CB_ID                  = 0x08U,    /*!< UART Wakeup Callback ID                  */
 
   HAL_UART_MSPINIT_CB_ID                 = 0x0BU,    /*!< UART MspInit callback ID                 */
-  HAL_UART_MSPDEINIT_CB_ID               = 0x0CU     /*!< UART MspDeInit callback ID               */
+  HAL_UART_MSPDEINIT_CB_ID               = 0x0CU,    /*!< UART MspDeInit callback ID               */
+
+	HAL_UART_RX_LINE_COMPLETE_CB_ID        = 0x0DU     /*!< UART Rx Line Complete Callback ID        */
 
 } HAL_UART_CallbackIDTypeDef;
 
@@ -723,6 +731,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart);
 void HAL_UART_AbortCpltCallback(UART_HandleTypeDef *huart);
 void HAL_UART_AbortTransmitCpltCallback(UART_HandleTypeDef *huart);
 void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef *huart);
+void HAL_UART_RxLineCpltCallback(UART_HandleTypeDef *huart);
 
 /**
   * @}
