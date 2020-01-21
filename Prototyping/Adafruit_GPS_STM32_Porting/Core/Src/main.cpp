@@ -139,21 +139,21 @@ int main(void)
   while (1)
   {
   	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-  	HAL_Delay(1000);
+  	HAL_Delay(50);
 
   	if (gps->newNMEAreceived()) {
-  		send_uart(gps->lastNMEA());
+  		//send_uart(gps->lastNMEA());
   		gps->parse(gps->lastNMEA());
-  	}
 
-  	if (gps->fix) {
-  		snprintf(buffer, sizeof(buffer), "%f%c %f%c %f m %f knots %f °\r\n",
-  				gps->latitude, gps->lat, gps->longitude, gps->lon, gps->altitude, gps->speed, gps->angle);
-  		send_uart(buffer);
-  	}
+			if (gps->fix) {
+				snprintf(buffer, sizeof(buffer), "\r\n%f%c %f%c %f m %f knots %f °\r\n",
+						gps->latitude, gps->lat, gps->longitude, gps->lon, gps->altitude, gps->speed, gps->angle);
+				send_uart(buffer);
+			}
 
-  	else {
-  		send_uart("No fix\r\n");
+			else {
+				send_uart("No fix\r\n");
+			}
   	}
     /* USER CODE END WHILE */
 
