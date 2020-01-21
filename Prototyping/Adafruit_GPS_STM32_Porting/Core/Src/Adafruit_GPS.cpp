@@ -699,7 +699,7 @@ bool Adafruit_GPS::begin(UART_HandleTypeDef *huart) {
 	// HAL_UART_RxLineCpltCallback() is called
 	HAL_UART_Receive_IT(gpsHwSerial, (uint8_t*) currentline, MAXLINELENGTH);
 
-  HAL_Delay(10);
+  HAL_Delay(100);
 
   return true;
 }
@@ -711,7 +711,8 @@ bool Adafruit_GPS::begin(UART_HandleTypeDef *huart) {
 */
 /**************************************************************************/
 void Adafruit_GPS::sendCommand(const char *str) {
-	HAL_UART_Transmit(gpsHwSerial, (uint8_t *) str, sizeof(str), 2000);
+	HAL_UART_Transmit(gpsHwSerial, (uint8_t *) str, strlen(str), 2000);
+	HAL_UART_Transmit(gpsHwSerial, (uint8_t *) "\r\n", 2, 2000);
 }
 
 /**************************************************************************/

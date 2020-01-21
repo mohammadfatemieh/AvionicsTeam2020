@@ -3009,6 +3009,8 @@ static HAL_StatusTypeDef UART_EndTransmit_IT(UART_HandleTypeDef *huart)
   return HAL_OK;
 }
 
+extern UART_HandleTypeDef huart1;
+
 /**
   * @brief  Receives an amount of data in non blocking mode
   * @param  huart  Pointer to a UART_HandleTypeDef structure that contains
@@ -3048,7 +3050,7 @@ static HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
       }
     }
 
-    if (--huart->RxXferCount == 0U || (huart->ReceiveUntilNewLine && *huart->pRxBuffPtr == '\n'))
+    if (--huart->RxXferCount == 0U || (huart->ReceiveUntilNewLine && huart->Instance->DR == '\n'))
     {
       /* Disable the UART Data Register not empty Interrupt */
       __HAL_UART_DISABLE_IT(huart, UART_IT_RXNE);

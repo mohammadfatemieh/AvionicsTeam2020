@@ -24,6 +24,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <Adafruit_GPS.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -41,6 +44,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
@@ -50,6 +54,7 @@ UART_HandleTypeDef huart3;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_USART1_UART_Init(void);
 static void MX_USART3_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -57,7 +62,15 @@ static void MX_USART3_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+#define BUG_LENGTH 512
+char buffer[512]; // to store data
 
+
+void send_uart(char *string)
+{
+	uint8_t len = strlen (string);
+	HAL_UART_Transmit(&huart1, (uint8_t *) string, len, 2000);  // transmit in blocking mode
+}
 /* USER CODE END 0 */
 
 /**
@@ -89,18 +102,16 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART1_UART_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  send_uart("Hello World\r\n");
+
   Adafruit_GPS *gps = Adafruit_GPS::getInstance();
 
-  // set baud rate of GPS module to 115200
-  gps->sendCommand(PMTK_SET_BAUD_115200);
-  // set baud rate of uC to 57600
-  HAL_UART_DeInit(&huart3);
-  huart3.Init.BaudRate = 115200;
-  if (HAL_UART_Init(&huart3) != HAL_OK)
-		Error_Handler();
+  HAL_Delay(500);
+  gps->begin(&huart3);
 
   // turn on RMC (recommended minimum) and GGA (fix data) including altitude
   gps->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
@@ -108,6 +119,19 @@ int main(void)
   gps->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // 1 Hz update rate
   // Request updates on antenna status, comment out to keep quiet
   gps->sendCommand(PGCMD_ANTENNA);
+
+  HAL_Delay(500);
+  // set baud rate of GPS module to 115200
+  gps->sendCommand(PMTK_SET_BAUD_115200);
+  HAL_Delay(100);
+  // set baud rate of uC to 115200
+  HAL_UART_DeInit(&huart3);
+  huart3.Init.BaudRate = 115200;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+		Error_Handler();
+
+  gps->begin(&huart3);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -115,14 +139,21 @@ int main(void)
   while (1)
   {
   	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-  	HAL_Delay(100);
+  	HAL_Delay(1000);
 
   	if (gps->newNMEAreceived()) {
+  		send_uart(gps->lastNMEA());
   		gps->parse(gps->lastNMEA());
   	}
 
   	if (gps->fix) {
+  		snprintf(buffer, sizeof(buffer), "%f%c %f%c %f m %f knots %f °\r\n",
+  				gps->latitude, gps->lat, gps->longitude, gps->lon, gps->altitude, gps->speed, gps->angle);
+  		send_uart(buffer);
+  	}
 
+  	else {
+  		send_uart("No fix\r\n");
   	}
     /* USER CODE END WHILE */
 
@@ -169,11 +200,44 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 115200;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
   * @brief USART3 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_USART3_UART_Init(void)
+static void MX_USART3_UART_Init()
 {
 
   /* USER CODE BEGIN USART3_Init 0 */

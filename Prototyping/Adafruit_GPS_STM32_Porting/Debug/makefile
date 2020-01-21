@@ -53,7 +53,7 @@ all: Adafruit_GPS_STM32_Porting.elf secondary-outputs
 
 # Tool invocations
 Adafruit_GPS_STM32_Porting.elf: $(OBJS) $(USER_OBJS) /media/data/Propulse/AvionicsTeam2020/Prototyping/Adafruit_GPS_STM32_Porting/STM32F103C8TX_FLASH.ld
-	arm-none-eabi-g++ -o "Adafruit_GPS_STM32_Porting.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/media/data/Propulse/AvionicsTeam2020/Prototyping/Adafruit_GPS_STM32_Porting/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Adafruit_GPS_STM32_Porting.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+	arm-none-eabi-g++ -o "Adafruit_GPS_STM32_Porting.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/media/data/Propulse/AvionicsTeam2020/Prototyping/Adafruit_GPS_STM32_Porting/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Adafruit_GPS_STM32_Porting.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
