@@ -1,19 +1,19 @@
-state.h:19:13:State::~State()	16	static
-state.h:19:13:virtual State::~State()	16	static
-state.h:25:18:virtual void State::onExit()	16	static
+state.h:15:13:State::~State()	16	static
+state.h:15:13:virtual State::~State()	16	static
+state.h:20:18:virtual bool State::getValidTransition(State*&)	16	static
 state.h:26:18:virtual void State::onEnter()	16	static
-state.h:29:18:virtual void State::onUpdate()	16	static
-transition.h:17:7:constexpr Transition::Transition()	16	static
-ab_transition.h:14:7:constexpr ABTransition::ABTransition()	16	static
-a_state.h:17:2:virtual bool AState::getValidTransition(State*&)	24	static
-a_state.h:19:5:AState::~AState()	24	static
-a_state.h:19:5:virtual AState::~AState()	16	static
-a_state.h:23:10:virtual void AState::onEnter()	16	static
+state.h:28:18:virtual void State::onExit()	16	static
+state.h:32:18:virtual void State::onUpdate()	16	static
+transition.h:11:7:constexpr Transition::Transition()	16	static
+transition.h:22:7:constexpr TransitionTo<ArmedState>::TransitionTo()	16	static
+ArmTransition.h:8:7:constexpr ArmTransition::ArmTransition()	16	static
 main.cpp:67:5:int main()	16	static
-main.cpp:113:6:void SystemClock_Config()	72	static
-main.cpp:148:13:void MX_GPIO_Init()	40	static
-main.cpp:177:6:void Error_Handler()	4	static
-state.h:16:7:constexpr State::State()	16	static
-a_state.h:16:7:constexpr AState::AState()	24	static
-statemachine.h:20:2:StateMachine<S>::StateMachine() [with S = AState]	24	static
-statemachine.h:29:7:void StateMachine<S>::update() [with S = AState]	24	static
+main.cpp:116:6:void SystemClock_Config()	72	static
+main.cpp:151:13:void MX_GPIO_Init()	40	static
+main.cpp:180:6:void Error_Handler()	4	static
+state.h:11:7:constexpr State::State()	16	static
+IdleState.h:8:7:constexpr IdleState::IdleState()	24	static
+statemachine.h:20:5:StateMachine<I>::StateMachine() [with I = IdleState]	24	static
+statemachine.h:32:10:void StateMachine<I>::update() [with I = IdleState]	24	static
+ArmedState.h:7:7:constexpr ArmedState::ArmedState()	16	static
+transition.h:24:20:State* TransitionTo<S>::getNextState() [with S = ArmedState]	24	static

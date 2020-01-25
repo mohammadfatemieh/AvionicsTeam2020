@@ -20,9 +20,13 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
- ../Core/Inc/fsm/statemachine.h ../Core/Inc/fsm/state.h \
- ../Core/Inc/states/a_state.h ../Core/Inc/fsm/state.h \
- ../Core/Inc/transitions/ab_transition.h ../Core/Inc/fsm/transition.h
+ ../Core/Inc/FSM/statemachine.h ../Core/Inc/FSM/state.h \
+ ../Core/Inc/FSM/../FSM/macros.h ../Core/Inc/States/IdleState.h \
+ ../Core/Inc/States/../FSM/state.h \
+ ../Core/Inc/States/../Transitions/ArmTransition.h \
+ ../Core/Inc/States/../Transitions/../FSM/transition.h \
+ ../Core/Inc/States/../Transitions/../States/ArmedState.h \
+ ../Core/Inc/States/../Transitions/../States/../FSM/state.h
 
 ../Core/Inc/main.h:
 
@@ -68,14 +72,20 @@ Core/Src/main.o: ../Core/Src/main.cpp ../Core/Inc/main.h \
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 
-../Core/Inc/fsm/statemachine.h:
+../Core/Inc/FSM/statemachine.h:
 
-../Core/Inc/fsm/state.h:
+../Core/Inc/FSM/state.h:
 
-../Core/Inc/states/a_state.h:
+../Core/Inc/FSM/../FSM/macros.h:
 
-../Core/Inc/fsm/state.h:
+../Core/Inc/States/IdleState.h:
 
-../Core/Inc/transitions/ab_transition.h:
+../Core/Inc/States/../FSM/state.h:
 
-../Core/Inc/fsm/transition.h:
+../Core/Inc/States/../Transitions/ArmTransition.h:
+
+../Core/Inc/States/../Transitions/../FSM/transition.h:
+
+../Core/Inc/States/../Transitions/../States/ArmedState.h:
+
+../Core/Inc/States/../Transitions/../States/../FSM/state.h:

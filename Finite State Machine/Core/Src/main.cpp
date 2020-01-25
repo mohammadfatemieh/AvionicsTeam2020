@@ -20,8 +20,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "fsm/statemachine.h"
-#include "states/a_state.h"
+#include "FSM/statemachine.h"
+#include "States/IdleState.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -90,7 +90,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  auto statemachine = StateMachine<AState>();
+  auto statemachine = StateMachine<IdleState>();
 
   /* USER CODE END 2 */
 
@@ -99,6 +99,9 @@ int main(void)
   while (1)
   {
 	  statemachine.update();
+
+	  /* STATE INDEPENDENT CODE HERE */
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
