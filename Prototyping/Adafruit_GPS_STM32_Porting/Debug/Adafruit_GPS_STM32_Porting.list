@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_macro  00016fc1  00000000  00000000  0002e240  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   000074d1  00000000  00000000  00045201  2**0
+ 17 .debug_line   000074c7  00000000  00000000  00045201  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    0006ebe9  00000000  00000000  0004c6d2  2**0
+ 18 .debug_str    0006ebdf  00000000  00000000  0004c6c8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000bb2bb  2**0
+ 19 .comment      0000007b  00000000  00000000  000bb2a7  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000315c  00000000  00000000  000bb338  2**2
+ 20 .debug_frame  0000315c  00000000  00000000  000bb324  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -3876,7 +3876,7 @@ int main(void)
  8002200:	f000 f932 	bl	8002468 <_ZL19MX_USART3_UART_Initv>
   /* USER CODE BEGIN 2 */
 
-  send_uart("Hello World\r\n");
+  send_uart((char*)"Hello World\r\n");
  8002204:	484f      	ldr	r0, [pc, #316]	; (8002344 <main+0x15c>)
  8002206:	f7ff ffd7 	bl	80021b8 <_Z9send_uartPc>
 
@@ -4048,7 +4048,7 @@ int main(void)
 			}
 
 			else {
-				send_uart("No fix\r\n");
+				send_uart((char*)"No fix\r\n");
  800233c:	480a      	ldr	r0, [pc, #40]	; (8002368 <main+0x180>)
  800233e:	f7ff ff3b 	bl	80021b8 <_Z9send_uartPc>
   	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);

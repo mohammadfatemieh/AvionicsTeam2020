@@ -378,6 +378,8 @@ HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)
   huart->gState = HAL_UART_STATE_READY;
   huart->RxState = HAL_UART_STATE_READY;
 
+  huart->ReceiveUntilNewLine = 0;
+
   return HAL_OK;
 }
 
@@ -771,6 +773,10 @@ HAL_StatusTypeDef HAL_UART_RegisterCallback(UART_HandleTypeDef *huart, HAL_UART_
         huart->MspDeInitCallback = pCallback;
         break;
 
+      case HAL_UART_RX_LINE_COMPLETE_CB_ID :
+        huart->RxLineCpltCallback = pCallback;
+        break;
+
       default :
         /* Update the error code */
         huart->ErrorCode |= HAL_UART_ERROR_INVALID_CALLBACK;
@@ -883,6 +889,10 @@ HAL_StatusTypeDef HAL_UART_UnRegisterCallback(UART_HandleTypeDef *huart, HAL_UAR
 
       case HAL_UART_MSPDEINIT_CB_ID :
         huart->MspDeInitCallback = HAL_UART_MspDeInit;                         /* Legacy weak MspDeInitCallback         */
+        break;
+
+      case HAL_UART_RX_LINE_COMPLETE_CB_ID:
+			  huart->RxLineCpltCallback = HAL_UART_RxLineCpltCallback;
         break;
 
       default :
@@ -2279,6 +2289,21 @@ __weak void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef *huart)
 }
 
 /**
+  * @brief  Rx Transfer line completed callbacks.
+  * @param  huart  Pointer to a UART_HandleTypeDef structure that contains
+  *                the configuration information for the specified UART module.
+  * @retval None
+  */
+__weak void HAL_UART_RxLineCpltCallback(UART_HandleTypeDef *huart)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(huart);
+  /* NOTE: This function should not be modified, when the callback is needed,
+           the HAL_UART_RxLineCpltCallback could be implemented in the user file
+   */
+}
+
+/**
   * @}
   */
 
@@ -2529,6 +2554,7 @@ void UART_InitCallbacksToDefault(UART_HandleTypeDef *huart)
   huart->AbortCpltCallback         = HAL_UART_AbortCpltCallback;         /* Legacy weak AbortCpltCallback         */
   huart->AbortTransmitCpltCallback = HAL_UART_AbortTransmitCpltCallback; /* Legacy weak AbortTransmitCpltCallback */
   huart->AbortReceiveCpltCallback  = HAL_UART_AbortReceiveCpltCallback;  /* Legacy weak AbortReceiveCpltCallback  */
+  huart->RxLineCpltCallback        = HAL_UART_RxLineCpltCallback;        /* Legacy weak RxLineCpltCallback        */
 
 }
 #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
@@ -2983,6 +3009,8 @@ static HAL_StatusTypeDef UART_EndTransmit_IT(UART_HandleTypeDef *huart)
   return HAL_OK;
 }
 
+extern UART_HandleTypeDef huart1;
+
 /**
   * @brief  Receives an amount of data in non blocking mode
   * @param  huart  Pointer to a UART_HandleTypeDef structure that contains
@@ -3022,7 +3050,7 @@ static HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
       }
     }
 
-    if (--huart->RxXferCount == 0U)
+    if (--huart->RxXferCount == 0U || (huart->ReceiveUntilNewLine && huart->Instance->DR == '\n'))
     {
       /* Disable the UART Data Register not empty Interrupt */
       __HAL_UART_DISABLE_IT(huart, UART_IT_RXNE);
@@ -3037,15 +3065,28 @@ static HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart)
       huart->RxState = HAL_UART_STATE_READY;
 
 #if (USE_HAL_UART_REGISTER_CALLBACKS == 1)
-      /*Call registered Rx complete callback*/
-      huart->RxCpltCallback(huart);
+      if(huart->RxXferCount == 0U) {
+				/*Call registered Rx complete callback*/
+				huart->RxCpltCallback(huart);
+      }
+      else {
+  			/*Call registered Rx line complete callback*/
+  			huart->RxLineCpltCallback(huart);
+      }
 #else
-      /*Call legacy weak Rx complete callback*/
-      HAL_UART_RxCpltCallback(huart);
+      if(huart->RxXferCount == 0U) {
+				/*Call legacy weak Rx complete callback*/
+				HAL_UART_RxCpltCallback(huart);
+      }
+      else {
+  			/*Call legacy weak Rx complete callback*/
+  			HAL_UART_RxLineCpltCallback(huart);
+      }
 #endif /* USE_HAL_UART_REGISTER_CALLBACKS */
 
       return HAL_OK;
     }
+
     return HAL_OK;
   }
   else

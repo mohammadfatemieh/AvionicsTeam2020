@@ -9,10 +9,9 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * README
+  * if regenerating the code USE_HAL_UART_REGISTER_CALLBACKS must be set to 1U
+  * in stm32f1xx_hal_conf.h
   *
   ******************************************************************************
   */
@@ -106,7 +105,7 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  send_uart("Hello World\r\n");
+  send_uart((char*)"Hello World\r\n");
 
   Adafruit_GPS *gps = Adafruit_GPS::getInstance();
 
@@ -152,7 +151,7 @@ int main(void)
 			}
 
 			else {
-				send_uart("No fix\r\n");
+				send_uart((char*)"No fix\r\n");
 			}
   	}
     /* USER CODE END WHILE */
