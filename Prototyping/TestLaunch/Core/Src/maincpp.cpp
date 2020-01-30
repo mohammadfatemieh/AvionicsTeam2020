@@ -2,14 +2,56 @@
  * main.cpp
  *
  *  Created on: Jan 21, 2020
- *      Author: jonas
+ *      Author: Jonas Juffinger
  */
+
+/*
+------------------------------- README -------------------------------
+
+# Status LED
+The green LED blinks while starting up. If the SD card doesn't work the LED blinks very fast for
+3 seconds while starting up.
+
+
+# XBee _IMPORTANT_
+The CTS line of the XBee must be connected to A0 of the STM32 to guarantee that correct
+data is sent when the connection is bad.
+
+
+# GPS
+For GPS the Adafruit GPS library is used that is ported to the STM32. It is completely interrupt based
+to not use much CPU time. To make this possible I had to change the HAL UART driver in the Drivers/
+directory. The new driver is in the customized directory and the official one is excluded from the build.
+
+If there is no GPS fix the LED is off shortly every second. If there is a GPS fix the LED is on
+constantly.
+
+
+# SD Card
+On the SD card a data.csv file while be created that contains all sensor data.
+Regenerating the code changes the FATFS driver. Change line 181 in FATFS/Target/ffconf.h to
+#define _MAX_SS    512
+
+
+# Barometer
+Connect the barometer to SPI1 at the extension header, CS is pin B3.
+
+
+# Misc
+When regenerating the code from the TestLaunchCode.ioc line 155 in stm32f1xx_hal_conf.h must be changed
+to 1U
+#define  USE_HAL_UART_REGISTER_CALLBACKS        1U // UART register callback disabled
+*/
+
+
 
 #include "main.h"
 #include "fatfs.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "bmp280.h"
+#include <Adafruit_GPS.h>
 
 
 extern ADC_HandleTypeDef hadc1;
@@ -24,44 +66,302 @@ extern UART_HandleTypeDef huart3;
 
 extern uint32_t millis;
 
-FATFS fs;  // file system
-FIL fil;  // file
-FRESULT fresult;  // to store the result
+
+// global buffer
 #define BUF_LENGTH 512
-char buffer[BUF_LENGTH]; // to store data
-#define RADIO_BUF_LENGTH 1
-uint8_t radioBuffer[RADIO_BUF_LENGTH];
+char buffer[BUF_LENGTH];
 
+bool radio_send_complete;
+char radio_send_buffer[BUF_LENGTH];
+
+
+FATFS fs;  // file system
+FIL datacsv; //, logtxt;  // file
+FRESULT fresult;  // to store the result
 UINT br, bw;   // file read/write count
-
 /* capacity related variables */
 FATFS *pfs;
 DWORD fre_clust;
 uint32_t total, free_space;
 
+struct bmp280_dev bmp;	// barometer
+
+Adafruit_GPS *gps;
+
+
+
+void Send_Uart (char *string);
+bool Send_Radio(char *buffer);
+void UART_Transmit_Complete_Callback(UART_HandleTypeDef *huart);
+
+bool InitSDCard();
+
+void GetAccelReadings(float &X, float &Y, float &Z);
+
+void InitBarometer();
+int GetPressureAndTemperatureReading(double &pressure, double &temp);
+
+void InitGPS();
+bool GetGPSReading();
+
+
+extern "C" int maincpp(void) {
+	bool sdCardAvailable = false;
+	int i;
+
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+
+	sdCardAvailable = InitSDCard();
+	// Toggle the LED fast when no SD card is available
+	if(!sdCardAvailable) {
+		for(i=0; i<30; i++) {
+			HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+			HAL_Delay(100);
+		}
+	}
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+
+	InitBarometer();
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+
+	InitGPS();
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+
+	radio_send_complete = true;
+	HAL_UART_RegisterCallback(&huart2, HAL_UART_TX_COMPLETE_CB_ID, UART_Transmit_Complete_Callback);
+
+
+	int16_t led_blink_timer = 1000;
+	uint16_t loop_delay = 200;
+
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	/* Infinite loop */
+	while (1)
+	{
+		int64_t loop_start_time = millis;
+
+		int rslt;
+		float accelX, accelY, accelZ;
+		double pressure, temp;
+
+		// Read the accelerometer
+		GetAccelReadings(accelX, accelY, accelZ);
+
+		// Read the barometer and temperature
+		rslt = GetPressureAndTemperatureReading(pressure, temp);
+		if(rslt != 0) {
+			// TODO Barometer ERROR
+		}
+
+		snprintf(buffer, sizeof(buffer), "%lu,%6.3f,%6.3f,%6.3f,%f,%f", millis,
+				accelX, accelY, accelZ, (float)pressure, (float)temp);
+
+		// Read GPS
+		if(GetGPSReading())  {
+			if(gps->fix) {
+				snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer),
+						",%f,%f,%f,%f,%f\r\n",
+						gps->latitude, gps->longitude, gps->altitude, gps->speed, gps->angle);
+			}
+			else {
+				snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer),
+						",NO FIX,,,,\r\n");
+			}
+		}
+		else {
+			snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer),
+					",,,,,\r\n");
+		}
+
+		if(sdCardAvailable) {
+			f_puts(buffer, &datacsv);
+		}
+
+		Send_Radio(buffer);
+
+
+
+		int64_t loop_duration = millis - loop_start_time;
+		int64_t delay_time = loop_delay - loop_duration;
+		if(delay_time > 0)
+			HAL_Delay(delay_time);
+
+		if(gps->fix)
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+		else {
+			led_blink_timer -= loop_duration;
+			if(led_blink_timer <= 0) {
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+				led_blink_timer = 1000;
+			}
+			else {
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+			}
+		}
+	}
+
+	/* Close file */
+	if(sdCardAvailable)
+		f_close(&datacsv);
+}
+
+
 
 /* to send the data to the uart */
-void send_uart (char *string)
+void Send_Uart (char *string)
 {
-	uint8_t len = strlen (string);
-	HAL_UART_Transmit(&huart1, (uint8_t *) string, len, 2000);  // transmit in blocking mode
+	HAL_UART_Transmit(&huart1, (uint8_t *) string, strlen (string), 2000);  // transmit in blocking mode
 }
 
-/* to find the size of data in the buffer */
-int bufsize (char *buf)
-{
-	int i=0;
-	while (*buf++ != '\0') i++;
-	return i;
-}
 
-void bufclear (void)  // clear buffer
-{
-	for (int i=0; i<BUF_LENGTH; i++)
-	{
-		buffer[i] = '\0';
+bool Send_Radio(char *buffer) {
+	if(radio_send_complete) {
+		radio_send_complete = false;
+		memcpy(radio_send_buffer, buffer, strlen(buffer));
+		HAL_UART_Transmit_IT(&huart2, (uint8_t*) radio_send_buffer, strlen(radio_send_buffer));
+		return true;
 	}
+
+	return false;
 }
+
+void UART_Transmit_Complete_Callback(UART_HandleTypeDef *huart) {
+	radio_send_complete = true;
+}
+
+
+
+bool InitSDCard() {
+	bool sdCardAvailable = false;
+
+	/* Mount SD Card */
+	fresult = f_mount(&fs, "", 0);
+	if (fresult != FR_OK){
+		Send_Uart ((char*)"error in mounting SD CARD...\r\n");
+		sdCardAvailable = true;
+	}
+	else {
+		Send_Uart((char*)"SD CARD mounted successfully...\r\n");
+		sdCardAvailable = false;
+	}
+
+	if(sdCardAvailable) {
+		/* Check free space */
+		f_getfree("", &fre_clust, &pfs);
+
+		total = (uint32_t)((pfs->n_fatent - 2) * pfs->csize * 0.5);
+		sprintf (buffer, "SD CARD Total Size: \t%lu\n",total);
+		Send_Uart(buffer);
+
+		memset(buffer, 0, BUF_LENGTH);
+
+		free_space = (uint32_t)(fre_clust * pfs->csize * 0.5);
+		sprintf (buffer, "SD CARD Free Space: \t%lu\n",free_space);
+		Send_Uart(buffer);
+
+		/* Open file to write/ create a file if it doesn't exist */
+		fresult = f_open(&datacsv, "data.csv", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
+		f_puts("TIME,X,Y,Z,P,T,LAT,LONG,H,V,ANG\n", &datacsv);
+
+		//fresult = f_open(&logtxt, "log.txt", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
+		//f_puts("SD card mounted and working\n", &logtxt);
+	}
+
+	return sdCardAvailable;
+}
+
+
+
+
+
+void GetAccelReadings(float &X, float &Y, float &Z) {
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, 100);
+	uint32_t intZ = HAL_ADC_GetValue(&hadc1) - 2048;
+
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, 100);
+	uint32_t intY = HAL_ADC_GetValue(&hadc1) - 2048;
+
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, 100);
+	uint32_t intX = HAL_ADC_GetValue(&hadc1) - 2048;
+
+	X = ((float)intX) / 372.0 + 0.250;
+	Y = ((float)intY) / 372.0 + 0.250;
+  Z = ((float)intZ) / 372.0;
+}
+
+
+
+
+
+
+int8_t spi_reg_write(uint8_t cs, uint8_t reg_addr, uint8_t *reg_data, uint16_t length);
+int8_t spi_reg_read(uint8_t cs, uint8_t reg_addr, uint8_t *reg_data, uint16_t length);
+void print_rslt(const char api_name[], int8_t rslt);
+
+void InitBarometer() {
+	// Init barometer
+  int8_t rslt;
+  struct bmp280_config conf;
+
+  // Set CS to high, this is the "not selected" state
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+
+  // Map the delay function pointer with the function responsible for implementing the delay
+  bmp.delay_ms = HAL_Delay;
+
+  bmp.dev_id = GPIO_PIN_4;
+  bmp.read = spi_reg_read;
+  bmp.write = spi_reg_write;
+  bmp.intf = BMP280_SPI_INTF;
+
+  rslt = bmp280_init(&bmp);
+  print_rslt(" bmp280_init status", rslt);
+
+  // Always read the current settings before writing, especially when
+  // all the configuration is not modified
+  rslt = bmp280_get_config(&conf, &bmp);
+  print_rslt(" bmp280_get_config status", rslt);
+
+  // configuring the temperature oversampling, filter coefficient and output data rate
+  // Overwrite the desired settings
+  conf.filter = BMP280_FILTER_COEFF_2;
+
+  // Pressure oversampling set at 4x
+  conf.os_pres = BMP280_OS_4X;
+
+  // Setting the output data rate as 1HZ(1000ms)
+  conf.odr = BMP280_ODR_1000_MS;
+  rslt = bmp280_set_config(&conf, &bmp);
+  print_rslt(" bmp280_set_config status", rslt);
+
+  // Always set the power mode after setting the configuration
+  rslt = bmp280_set_power_mode(BMP280_NORMAL_MODE, &bmp);
+  print_rslt(" bmp280_set_power_mode status", rslt);
+}
+
+
+int GetPressureAndTemperatureReading(double &pressure, double &temp) {
+  struct bmp280_uncomp_data ucomp_data;
+
+	// Reading the raw data from sensor
+	int rslt = bmp280_get_uncomp_data(&ucomp_data, &bmp);
+	if(rslt != 0) return rslt;
+
+	rslt  = bmp280_get_comp_pres_double(&pressure, ucomp_data.uncomp_press, &bmp);
+	if(rslt != 0) return rslt;
+
+	rslt  = bmp280_get_comp_temp_double(&pressure, ucomp_data.uncomp_temp, &bmp);
+	if(rslt != 0) return rslt;
+
+	return 0;
+}
+
+
 
 ///*!
 // *  @brief Function for writing the sensor's registers through SPI bus.
@@ -153,191 +453,52 @@ void print_rslt(const char api_name[], int8_t rslt)
 		}
 		else
 		{
-				/* For more error codes refer "*_defs.h" */
+			//For more error codes refer "*_defs.h"
 			snprintf(buffer, sizeof(buffer), "Error [%d] : Unknown error code\r\n", rslt);
 		}
 	}
-	send_uart(buffer);
+	Send_Uart(buffer);
 }
 
 
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-	if(huart == &huart1) {
-		HAL_UART_Transmit(&huart2, radioBuffer, RADIO_BUF_LENGTH, 1000);
-	}
-	else if(huart == &huart2) {
-		HAL_UART_Transmit(&huart1, radioBuffer, RADIO_BUF_LENGTH, 1000);
-	}
 
-	HAL_UART_Receive_IT(huart, radioBuffer, RADIO_BUF_LENGTH);
+void InitGPS() {
+	gps = Adafruit_GPS::getInstance();
+
+	HAL_Delay(500);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+
+	gps->begin(&huart3);
+
+	// turn on RMC (recommended minimum) and GGA (fix data) including altitude
+	gps->sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA);
+	// Set the update rate
+	gps->sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // 1 Hz update rate
+	// Request updates on antenna status, comment out to keep quiet
+	gps->sendCommand(PGCMD_ANTENNA);
+
+	HAL_Delay(500);
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+	// set baud rate of GPS module to 115200
+	gps->sendCommand(PMTK_SET_BAUD_115200);
+	HAL_Delay(100);
+	// set baud rate of uC to 115200
+	HAL_UART_DeInit(&huart3);
+	huart3.Init.BaudRate = 115200;
+	if (HAL_UART_Init(&huart3) != HAL_OK)
+		Error_Handler();
+
+	gps->begin(&huart3);
 }
 
-
-extern "C" int maincpp(void) {
-	send_uart((char*) "Hello World\r\n");
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
-
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
-
-	int accelZ=0, accelY=0, accelX=0;
-	bool sdCardAvailable = false;
-
-
-
-/*
-	// Init barometer
-  int8_t rslt;
-  struct bmp280_dev bmp;
-  struct bmp280_config conf;
-  struct bmp280_uncomp_data ucomp_data;
-  uint32_t pres32, pres64;
-  double pres;
-
-  // Set CS to high, this is the "not selected" state
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-
-  // Map the delay function pointer with the function responsible for implementing the delay
-  bmp.delay_ms = HAL_Delay;
-
-  bmp.dev_id = GPIO_PIN_4;
-  bmp.read = spi_reg_read;
-  bmp.write = spi_reg_write;
-  bmp.intf = BMP280_SPI_INTF;
-
-  rslt = bmp280_init(&bmp);
-  print_rslt(" bmp280_init status", rslt);
-
-  // Always read the current settings before writing, especially when
-  // all the configuration is not modified
-  rslt = bmp280_get_config(&conf, &bmp);
-  print_rslt(" bmp280_get_config status", rslt);
-
-  // configuring the temperature oversampling, filter coefficient and output data rate
-  // Overwrite the desired settings
-  conf.filter = BMP280_FILTER_COEFF_2;
-
-  // Pressure oversampling set at 4x
-  conf.os_pres = BMP280_OS_4X;
-
-  // Setting the output data rate as 1HZ(1000ms)
-  conf.odr = BMP280_ODR_1000_MS;
-  rslt = bmp280_set_config(&conf, &bmp);
-  print_rslt(" bmp280_set_config status", rslt);
-
-  // Always set the power mode after setting the configuration
-  rslt = bmp280_set_power_mode(BMP280_NORMAL_MODE, &bmp);
-  print_rslt(" bmp280_set_power_mode status", rslt);*/
-
-
-
-
-
-
-	/* Mount SD Card */
-	fresult = f_mount(&fs, "", 0);
-	if (fresult != FR_OK){
-		send_uart ((char*)"error in mounting SD CARD...\r\n");
-		sdCardAvailable = true;
-	}
-	else {
-		send_uart((char*)"SD CARD mounted successfully...\r\n");
-		sdCardAvailable = false;
+bool GetGPSReading() {
+	if (gps->newNMEAreceived()) {
+		//send_uart(gps->lastNMEA());
+		gps->parse(gps->lastNMEA());
+		return true;
 	}
 
-	if(sdCardAvailable) {
-		/* Check free space */
-		f_getfree("", &fre_clust, &pfs);
-
-		total = (uint32_t)((pfs->n_fatent - 2) * pfs->csize * 0.5);
-		sprintf (buffer, "SD CARD Total Size: \t%lu\n",total);
-		send_uart(buffer);
-		bufclear();
-		free_space = (uint32_t)(fre_clust * pfs->csize * 0.5);
-		sprintf (buffer, "SD CARD Free Space: \t%lu\n",free_space);
-		send_uart(buffer);
-
-
-		/* Open file to write/ create a file if it doesn't exist */
-		fresult = f_open(&fil, "data.csv", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
-		f_puts("TIME,X,Y,Z\n", &fil);
-	}
-
-
-	HAL_UART_RegisterCallback(&huart1, HAL_UART_RX_COMPLETE_CB_ID, HAL_UART_RxCpltCallback);
-	HAL_UART_RegisterCallback(&huart2, HAL_UART_RX_COMPLETE_CB_ID, HAL_UART_RxCpltCallback);
-
-	HAL_UART_Receive_IT(&huart1, radioBuffer, RADIO_BUF_LENGTH);
-	HAL_UART_Receive_IT(&huart2, radioBuffer, RADIO_BUF_LENGTH);
-
-
-	uint8_t sync_counter = 0;
-
-	/* Infinite loop */
-	while (1)
-	{
-		HAL_ADC_Start(&hadc1);
-		HAL_ADC_PollForConversion(&hadc1, 100);
-		accelZ = HAL_ADC_GetValue(&hadc1) - 2048;
-
-		HAL_ADC_Start(&hadc1);
-		HAL_ADC_PollForConversion(&hadc1, 100);
-		accelY = HAL_ADC_GetValue(&hadc1) - 2048;
-
-		HAL_ADC_Start(&hadc1);
-		HAL_ADC_PollForConversion(&hadc1, 100);
-		accelX = HAL_ADC_GetValue(&hadc1) - 2048;
-
-
-		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
-
-
-		snprintf(buffer, sizeof(buffer), "%lu,%6.3f,%6.3f,%6.3f\r\n", millis,((float)accelX) / 372.0 + 0.250, ((float)accelY) / 372.0 + 0.250, ((float)accelZ) / 372.0);
-
-		if(sdCardAvailable) {
-			f_puts(buffer, &fil);
-			if(sync_counter == 20) {
-				sync_counter = 0;
-				f_sync(&fil);
-			}
-			sync_counter++;
-		}
-
-		HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
-
-/*
-		// Reading the raw data from sensor
-		rslt = bmp280_get_uncomp_data(&ucomp_data, &bmp);
-
-		// Getting the compensated pressure using 32 bit precision
-		rslt = bmp280_get_comp_pres_32bit(&pres32, ucomp_data.uncomp_press, &bmp);
-
-		// Getting the compensated pressure using 64 bit precision
-		rslt = bmp280_get_comp_pres_64bit(&pres64, ucomp_data.uncomp_press, &bmp);
-
-		// Getting the compensated pressure as floating point value
-		rslt = bmp280_get_comp_pres_double(&pres, ucomp_data.uncomp_press, &bmp);
-		snprintf(buffer, sizeof(buffer), "UP: %ld, P32: %ld, P64: %ld, P64N: %ld, P: %f\r\n",
-		                 ucomp_data.uncomp_press,
-		                 pres32,
-		                 pres64,
-		                 pres64 / 256,
-		                 pres);
-
-		HAL_UART_Transmit(&huart2, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
-
-*/
-
-		HAL_Delay(200);
-
-		//HAL_UART_Transmit(&huart2, (uint8_t*) "Hello World\r\n", 13, 2000);  // transmit in blocking mode
-	}
-
-	/* Close file */
-	if(sdCardAvailable)
-		f_close(&fil);
+	return false;
 }
-
 

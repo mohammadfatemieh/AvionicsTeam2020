@@ -14,9 +14,11 @@ C_SRCS += \
 ../Core/Src/system_stm32f1xx.c 
 
 CPP_SRCS += \
+../Core/Src/Adafruit_GPS.cpp \
 ../Core/Src/maincpp.cpp 
 
 OBJS += \
+./Core/Src/Adafruit_GPS.o \
 ./Core/Src/bmp280.o \
 ./Core/Src/fatfs_sd.o \
 ./Core/Src/main.o \
@@ -38,10 +40,13 @@ C_DEPS += \
 ./Core/Src/system_stm32f1xx.d 
 
 CPP_DEPS += \
+./Core/Src/Adafruit_GPS.d \
 ./Core/Src/maincpp.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
+Core/Src/Adafruit_GPS.o: ../Core/Src/Adafruit_GPS.cpp
+	arm-none-eabi-g++ "$<" -mcpu=cortex-m3 -std=gnu++14 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../FATFS/App -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../FATFS/Target -I../Middlewares/Third_Party/FatFs/src -O0 -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti -fno-threadsafe-statics -fno-use-cxa-atexit -Wall -fstack-usage -MMD -MP -MF"Core/Src/Adafruit_GPS.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/Src/bmp280.o: ../Core/Src/bmp280.c
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m3 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -DDEBUG -c -I../FATFS/App -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../FATFS/Target -I../Middlewares/Third_Party/FatFs/src -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/bmp280.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Core/Src/fatfs_sd.o: ../Core/Src/fatfs_sd.c
