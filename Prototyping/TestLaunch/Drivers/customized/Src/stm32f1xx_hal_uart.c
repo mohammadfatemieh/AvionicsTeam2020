@@ -2092,7 +2092,7 @@ void HAL_UART_IRQHandler(UART_HandleTypeDef *huart)
         /* Blocking error : transfer is aborted
            Set the UART state ready to be able to start again the process,
            Disable Rx Interrupts, and disable Rx DMA request, if ongoing */
-        UART_EndRxTransfer(huart);
+        //UART_EndRxTransfer(huart);
 
         /* Disable the UART DMA Rx request if enabled */
         if (HAL_IS_BIT_SET(huart->Instance->CR3, USART_CR3_DMAR))

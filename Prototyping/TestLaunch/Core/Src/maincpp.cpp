@@ -13,15 +13,13 @@ The green LED blinks while starting up. If the SD card doesn't work the LED blin
 3 seconds while starting up.
 
 
-# XBee _IMPORTANT_
-The CTS line of the XBee must be connected to A0 of the STM32 to guarantee that correct
-data is sent when the connection is bad.
-
-
 # GPS
 For GPS the Adafruit GPS library is used that is ported to the STM32. It is completely interrupt based
 to not use much CPU time. To make this possible I had to change the HAL UART driver in the Drivers/
 directory. The new driver is in the customized directory and the official one is excluded from the build.
+The file from customized/Inc must be copied into the STM32F1xx_HAL_Driver/Inc
+
+The UART3 interrupt must be enabled in the USART3 and NVIC settings.
 
 If there is no GPS fix the LED is off shortly every second. If there is a GPS fix the LED is on
 constantly.
@@ -109,7 +107,15 @@ extern "C" int maincpp(void) {
 	bool sdCardAvailable = false;
 	int i;
 
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	// Set Barometer into SPI mode, this must be done before
+	// the SD card is initialized
+  // Set CS to high, this is the "not selected" state
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+
+
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 
 	sdCardAvailable = InitSDCard();
 	// Toggle the LED fast when no SD card is available
@@ -127,20 +133,21 @@ extern "C" int maincpp(void) {
 	InitGPS();
 	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
 
+
 	radio_send_complete = true;
 	HAL_UART_RegisterCallback(&huart2, HAL_UART_TX_COMPLETE_CB_ID, UART_Transmit_Complete_Callback);
 
 
-	int16_t led_blink_timer = 1000;
-	uint16_t loop_delay = 200;
+	int16_t led_blink_timer = 1000, sync_counter = 10;
+	uint16_t loop_delay = 10;
 
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 	/* Infinite loop */
 	while (1)
 	{
 		int64_t loop_start_time = millis;
 
-		int rslt;
+		int rslt = 0;
 		float accelX, accelY, accelZ;
 		double pressure, temp;
 
@@ -165,7 +172,7 @@ extern "C" int maincpp(void) {
 			}
 			else {
 				snprintf(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer),
-						",NO FIX,,,,\r\n");
+						",NO FIX,%s,,,\r\n", gps->lastNMEA());
 			}
 		}
 		else {
@@ -173,11 +180,19 @@ extern "C" int maincpp(void) {
 					",,,,,\r\n");
 		}
 
+		//Send_Radio(buffer);
+
+		Send_Uart(buffer);
+
 		if(sdCardAvailable) {
 			f_puts(buffer, &datacsv);
 		}
 
-		Send_Radio(buffer);
+		sync_counter--;
+		if(sync_counter == 0) {
+			f_sync(&datacsv);
+			sync_counter = 10;
+		}
 
 
 
@@ -187,15 +202,17 @@ extern "C" int maincpp(void) {
 			HAL_Delay(delay_time);
 
 		if(gps->fix)
-			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 		else {
-			led_blink_timer -= loop_duration;
-			if(led_blink_timer <= 0) {
-				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
-				led_blink_timer = 1000;
+			led_blink_timer -= loop_delay;
+			if(led_blink_timer <= 100) {
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+
+				if(led_blink_timer <= 0)
+					led_blink_timer = 2000;
 			}
 			else {
-				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
 			}
 		}
 	}
@@ -238,11 +255,11 @@ bool InitSDCard() {
 	fresult = f_mount(&fs, "", 0);
 	if (fresult != FR_OK){
 		Send_Uart ((char*)"error in mounting SD CARD...\r\n");
-		sdCardAvailable = true;
+		sdCardAvailable = false;
 	}
 	else {
 		Send_Uart((char*)"SD CARD mounted successfully...\r\n");
-		sdCardAvailable = false;
+		sdCardAvailable = true;
 	}
 
 	if(sdCardAvailable) {
@@ -250,18 +267,23 @@ bool InitSDCard() {
 		f_getfree("", &fre_clust, &pfs);
 
 		total = (uint32_t)((pfs->n_fatent - 2) * pfs->csize * 0.5);
-		sprintf (buffer, "SD CARD Total Size: \t%lu\n",total);
+		if(total == 0)
+			return false;
+
+		sprintf (buffer, "SD CARD Total Size: \t%lu\r\n",total);
 		Send_Uart(buffer);
 
 		memset(buffer, 0, BUF_LENGTH);
 
 		free_space = (uint32_t)(fre_clust * pfs->csize * 0.5);
-		sprintf (buffer, "SD CARD Free Space: \t%lu\n",free_space);
+		sprintf (buffer, "SD CARD Free Space: \t%lu\r\n",free_space);
 		Send_Uart(buffer);
 
 		/* Open file to write/ create a file if it doesn't exist */
 		fresult = f_open(&datacsv, "data.csv", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
 		f_puts("TIME,X,Y,Z,P,T,LAT,LONG,H,V,ANG\n", &datacsv);
+
+		f_sync(&datacsv);
 
 		//fresult = f_open(&logtxt, "log.txt", FA_OPEN_ALWAYS | FA_READ | FA_WRITE);
 		//f_puts("SD card mounted and working\n", &logtxt);
@@ -277,15 +299,15 @@ bool InitSDCard() {
 void GetAccelReadings(float &X, float &Y, float &Z) {
 	HAL_ADC_Start(&hadc1);
 	HAL_ADC_PollForConversion(&hadc1, 100);
-	uint32_t intZ = HAL_ADC_GetValue(&hadc1) - 2048;
+	int32_t intZ = HAL_ADC_GetValue(&hadc1) - 2048;
 
 	HAL_ADC_Start(&hadc1);
 	HAL_ADC_PollForConversion(&hadc1, 100);
-	uint32_t intY = HAL_ADC_GetValue(&hadc1) - 2048;
+	int32_t intY = HAL_ADC_GetValue(&hadc1) - 2048;
 
 	HAL_ADC_Start(&hadc1);
 	HAL_ADC_PollForConversion(&hadc1, 100);
-	uint32_t intX = HAL_ADC_GetValue(&hadc1) - 2048;
+	int32_t intX = HAL_ADC_GetValue(&hadc1) - 2048;
 
 	X = ((float)intX) / 372.0 + 0.250;
 	Y = ((float)intY) / 372.0 + 0.250;
@@ -306,15 +328,10 @@ void InitBarometer() {
   int8_t rslt;
   struct bmp280_config conf;
 
-  // Set CS to high, this is the "not selected" state
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-
   // Map the delay function pointer with the function responsible for implementing the delay
   bmp.delay_ms = HAL_Delay;
 
-  bmp.dev_id = GPIO_PIN_4;
+  bmp.dev_id = GPIO_PIN_3;
   bmp.read = spi_reg_read;
   bmp.write = spi_reg_write;
   bmp.intf = BMP280_SPI_INTF;
@@ -355,7 +372,7 @@ int GetPressureAndTemperatureReading(double &pressure, double &temp) {
 	rslt  = bmp280_get_comp_pres_double(&pressure, ucomp_data.uncomp_press, &bmp);
 	if(rslt != 0) return rslt;
 
-	rslt  = bmp280_get_comp_temp_double(&pressure, ucomp_data.uncomp_temp, &bmp);
+	rslt  = bmp280_get_comp_temp_double(&temp, ucomp_data.uncomp_temp, &bmp);
 	if(rslt != 0) return rslt;
 
 	return 0;

@@ -597,6 +597,21 @@ void Adafruit_GPS::HAL_UART_RxLineCpltCallback() {
 	HAL_UART_Receive_IT(gpsHwSerial, (uint8_t*) currentline, MAXLINELENGTH);
 }
 
+void Adafruit_GPS::HAL_UART_ErrorCallback() {
+	return;
+
+  if (currentline == line1) {
+    currentline = line2;
+    lastline = line1;
+  } else {
+    currentline = line1;
+    lastline = line2;
+  }
+
+  // Receive next line
+	HAL_UART_Receive_IT(gpsHwSerial, (uint8_t*) currentline, MAXLINELENGTH);
+}
+
 /**************************************************************************/
 /*!
     @brief This is done by the UART HAL driver. It calles the line complete callback when a line was received
@@ -694,6 +709,7 @@ bool Adafruit_GPS::begin(UART_HandleTypeDef *huart) {
 
 	HAL_UART_RegisterCallback(gpsHwSerial, HAL_UART_RX_LINE_COMPLETE_CB_ID, Adafruit_GPS::HAL_UART_RxLineCpltCallback_static);
 	HAL_UART_RegisterCallback(gpsHwSerial, HAL_UART_RX_COMPLETE_CB_ID, Adafruit_GPS::HAL_UART_RxLineCpltCallback_static);
+	HAL_UART_RegisterCallback(gpsHwSerial, HAL_UART_ERROR_CB_ID, Adafruit_GPS::HAL_UART_ErrorCallback_static);
 
 	// From know on the UART automatically receives and if a newline is received
 	// HAL_UART_RxLineCpltCallback() is called
@@ -923,6 +939,10 @@ static bool strStartsWith(const char *str, const char *prefix) {
 
 void Adafruit_GPS::HAL_UART_RxLineCpltCallback_static(UART_HandleTypeDef *huart) {
 	Adafruit_GPS::getInstance()->HAL_UART_RxLineCpltCallback();
+}
+
+void Adafruit_GPS::HAL_UART_ErrorCallback_static(UART_HandleTypeDef *huart) {
+	Adafruit_GPS::getInstance()->HAL_UART_ErrorCallback();
 }
 
 

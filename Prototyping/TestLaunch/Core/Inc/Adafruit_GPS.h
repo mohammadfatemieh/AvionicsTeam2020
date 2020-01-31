@@ -178,6 +178,9 @@ public:
   void HAL_UART_RxLineCpltCallback();
   static void HAL_UART_RxLineCpltCallback_static(UART_HandleTypeDef *huart);
 
+  void HAL_UART_ErrorCallback();
+  static void HAL_UART_ErrorCallback_static(UART_HandleTypeDef *huart);
+
   int thisCheck = 0; ///< the results of the check on the current sentence
   char thisSource[NMEA_MAX_SOURCE_ID] = {
       0}; ///< the first two letters of the current sentence, e.g. WI, GP
